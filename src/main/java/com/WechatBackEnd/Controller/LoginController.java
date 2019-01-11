@@ -1,28 +1,41 @@
 package com.WechatBackEnd.Controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+import com.WechatBackEnd.Util.Constant;
 
 @RestController
-@SpringBootApplication
 public class LoginController {
-	@RequestMapping("/getUser")
-	public Map<String, Object> getUser(){
-		System.out.println("微信小程序正在调用。。。");
-		Map<String, Object> map = new HashMap<String, Object>();
-		List<String> list = new ArrayList<String>();
- 		list.add("zhangsan");
- 		list.add("lisi");
- 		list.add("wanger");
- 		list.add("mazi");
- 		map.put("list",list);
-		System.out.println("微信小程序调用完成。。。");
-		return map;
+	@RequestMapping(value=	"/",method=RequestMethod.POST)
+	public String login(@RequestBody Map<String,Object> userCode) {
+		System.out.println("登录运行");
+		String sessionData = "";
+		String code =(String)userCode.get("userCode");
+		System.out.println(code);
+		String url = "https://api.weixin.qq.com/sns/jscode2session?appid="+Constant.APPID+
+				 "&secret="+Constant.SECRETKEY+"&js_code="+ code +"&grant_type=authorization_code";
+		
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
+		if (responseEntity != null && responseEntity.getStatusCode() == HttpStatus.OK) {
+			sessionData=responseEntity.getBody();
+			System.out.println("请求成功，session： "+sessionData);
+			//服务层自定义登录态
+			{
+				
+			}
+		}else {
+			System.out.println("请求失败");
+		}
+		return "登录成功";
 	}
 }

@@ -17,7 +17,7 @@ public class ScheduleCollectRecord {
 	public int sid;
 	@Column(name = "record_time", nullable = false)
 	public String recordTime;
-	@Column(name = "isPositive", nullable = false)
+	@Column(name = "is_positive", nullable = false)
 	public String isPositive;
 
 	public ScheduleCollectRecord() {

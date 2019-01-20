@@ -17,9 +17,9 @@ public class ScheduleComment {
 	public int uid;
 	@Column(name = "at_uid", nullable = true)
 	public int atUid;
-	@Column(name = "commentContent", nullable = true)
+	@Column(name = "comment_content", nullable = true)
 	public String commentContent;
-	@Column(name = "recordTime", nullable = true)
+	@Column(name = "record_time", nullable = true)
 	public String recordTime;
 
 	public ScheduleComment() {

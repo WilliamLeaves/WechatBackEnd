@@ -17,7 +17,7 @@ public class FollowUserRecord {
 	public int followUserId;
 	@Column(name = "record_time", nullable = false)
 	public String recordTime;
-	@Column(name = "isPositive", nullable = false)
+	@Column(name = "is_positive",columnDefinition="enum('Y','N') null default 'Y' ")
 	public String isPositive;
 
 	public FollowUserRecord() {

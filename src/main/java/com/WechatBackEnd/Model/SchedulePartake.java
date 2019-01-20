@@ -17,7 +17,7 @@ public class SchedulePartake {
 	public int uid;
 	@Column(name = "record_time", nullable = true)
 	public String recordTime;
-	@Column(name = "status", nullable = false)
+	@Column(name = "status", columnDefinition="enum('proposing','partook','quit') not null default 'proposing' ")
 	public String status;
 
 	public SchedulePartake() {

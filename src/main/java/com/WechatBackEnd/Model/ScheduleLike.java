@@ -17,7 +17,7 @@ public class ScheduleLike {
 	public int uid;
 	@Column(name = "record_time", nullable = true)
 	public String recordTime;
-	@Column(name = "isPositive", nullable = true)
+	@Column(name = "is_positive",columnDefinition="enum('Y','N') null default 'Y' ")
 	public String isPositive;
 
 	public ScheduleLike() {

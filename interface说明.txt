@@ -1,0 +1,131 @@
+/getUser:获取用户信息
+request:
+{
+	url:”/getUser?uid=uid”,
+	method:”GET”,
+	data:{
+	}
+}
+response:
+{
+	uid:”用户id”,
+	nickname:”用户昵称”,
+	college:”学校名称”,
+	majod:”专业名称”,
+	describe:”用户描述”,
+	register_time:”注册日期，如2018-12-31”,
+	entrance_time:”入学年份，如2014”,
+	ownScheduleNum:”发起出游的数量”,
+	partakeNum:”参与出游的数量”
+}
+
+/user/updateUserInfo:修改用户信息
+request:
+{
+	url:”/user/updateUserInfo”,
+	method:”POST”,
+	data:{
+		uid:”uid”,
+		nickname:”用户昵称”,
+		college:”学校名称”,
+		majod:”专业名称”,
+		describe:”用户描述”,
+entrance_time:”入学年份，如2014”
+		}
+	}
+}
+respose:
+{
+	result:”修改成功”
+}
+
+/user/followUser：关注用户
+request
+{
+	url:”/user/followUser”,
+	method:”POST”,
+	data:{
+		followed_uid:1
+}
+}
+response
+{
+	result:”关注成功”
+}
+
+/user/disfollowUser：取消关注用户
+request:
+{
+	url:”/user/disfollowUser”,
+	method:”POST”,
+	data:{
+		followed_uid:1
+	}
+}
+response:
+{
+	result:”取消关注成功”
+}	
+
+/user/getFollowList：获得我的关注列表
+request:
+{
+	url:”/user/getFollowList”,
+	method:”GET”,
+	data:{
+	}
+}
+response:
+{
+	follow_list:[{
+		uid:”uid”,
+		nickname:”用户昵称”,
+		follow_time:”关注时间”
+}]
+}
+
+/getMyInfo：获得我的个人信息
+request:{
+	url:”/getMyInfo”,
+	method:”GET”,
+	data:{
+	}
+}
+response:
+{
+	uid:”用户id”,
+	nickname:”用户昵称”,
+	college:”学校名称”,
+	majod:”专业名称”,
+	describe:”用户描述”,
+	register_time:”注册日期，如2018-12-31”,
+	entrance_time:”入学年份，如2014”,
+	ownScheduleNum:”发起出游的数量”,
+	partakeNum:”参与出游的数量”
+}
+
+/getSchedule?sid=sid：获得出游计划的详细内容
+request:
+{
+	url:”/getSchedule?sid=sid”,
+	method:”GET”,
+	data:{
+	}
+}
+response:
+{
+	sid:1,
+	target:”目的地”,
+	meet_place:”出发地点”,
+	start_time:”发布时间”
+	recruit_start_time:”报名开始时间”,
+	recruit_end_time:”报名截止时间”,
+	execute_time:”出发时间”,
+	end_time:”结束时间”,
+	title:”出游计划标题”,
+	content:”出游计划描述”,
+	uid:”发起人id”,
+	nickname:”发起人昵称”,
+	partookNum:”已参与的人数”,
+	announcementNum:”公告数量”
+}

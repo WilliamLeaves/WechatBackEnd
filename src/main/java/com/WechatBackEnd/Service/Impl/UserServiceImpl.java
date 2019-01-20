@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("uid", user.uid);
 		map.put("nickname", user.nickname);
+		map.put("sex",user.sex);
 		map.put("college", user.college);
 		map.put("major", user.major);
 		map.put("register_time", user.registerTime);

@@ -1,131 +1,506 @@
+*****************************
 /getUser:获取用户信息
 request:
 {
-	url:”/getUser?uid=uid”,
-	method:”GET”,
+	url:"/getUser?uid=uid",
+	method:"GET",
 	data:{
 	}
 }
 response:
 {
-	uid:”用户id”,
-	nickname:”用户昵称”,
-	college:”学校名称”,
-	majod:”专业名称”,
-	describe:”用户描述”,
-	register_time:”注册日期，如2018-12-31”,
-	entrance_time:”入学年份，如2014”,
-	ownScheduleNum:”发起出游的数量”,
-	partakeNum:”参与出游的数量”
+	uid:"用户id",
+	nickname:"用户昵称",
+	sex："男",
+	college:"学校名称",
+	majod:"专业名称",
+	describe:"用户描述",
+	register_time:"注册日期,如2018-12-31",
+	entrance_time:"入学年份,如2014",
+	ownScheduleNum:"发起出游的数量",
+	partakeNum:"参与出游的数量"
 }
+*****************************
 
+*****************************
 /user/updateUserInfo:修改用户信息
 request:
 {
-	url:”/user/updateUserInfo”,
-	method:”POST”,
+	url:"/user/updateUserInfo",
+	method:"POST",
 	data:{
-		uid:”uid”,
-		nickname:”用户昵称”,
-		college:”学校名称”,
-		majod:”专业名称”,
-		describe:”用户描述”,
-entrance_time:”入学年份，如2014”
+		uid:"uid",
+		nickname:"用户昵称",
+		college:"学校名称",
+		majod:"专业名称",
+		describe:"用户描述",
+entrance_time:"入学年份,如2014"
 		}
 	}
 }
 respose:
 {
-	result:”修改成功”
+	result:"修改成功"
 }
+*****************************
 
+*****************************
 /user/followUser：关注用户
 request
 {
-	url:”/user/followUser”,
-	method:”POST”,
+	url:"/user/followUser",
+	method:"POST",
 	data:{
 		followed_uid:1
 }
 }
 response
 {
-	result:”关注成功”
+	result:"关注成功"
 }
+*****************************
 
+*****************************
 /user/disfollowUser：取消关注用户
 request:
 {
-	url:”/user/disfollowUser”,
-	method:”POST”,
+	url:"/user/disfollowUser",
+	method:"POST",
 	data:{
 		followed_uid:1
 	}
 }
 response:
 {
-	result:”取消关注成功”
+	result:"取消关注成功"
 }	
+*****************************
 
+*****************************
 /user/getFollowList：获得我的关注列表
 request:
 {
-	url:”/user/getFollowList”,
-	method:”GET”,
+	url:"/user/getFollowList",
+	method:"GET",
 	data:{
 	}
 }
 response:
 {
 	follow_list:[{
-		uid:”uid”,
-		nickname:”用户昵称”,
-		follow_time:”关注时间”
-}]
+		uid:"uid",
+		nickname:"用户昵称",
+		follow_time:"关注时间"
+	}]
 }
+*****************************
 
-/getMyInfo：获得我的个人信息
+*****************************
+/user/getMyInfo：获得我的个人信息
 request:{
-	url:”/getMyInfo”,
-	method:”GET”,
+	url:"/user/getMyInfo",
+	method:"GET",
 	data:{
 	}
 }
 response:
 {
-	uid:”用户id”,
-	nickname:”用户昵称”,
-	college:”学校名称”,
-	majod:”专业名称”,
-	describe:”用户描述”,
-	register_time:”注册日期，如2018-12-31”,
-	entrance_time:”入学年份，如2014”,
-	ownScheduleNum:”发起出游的数量”,
-	partakeNum:”参与出游的数量”
+	uid:"用户id",
+	nickname:"用户昵称",
+	sex:"男",
+	college:"学校名称",
+	majod:"专业名称",
+	describe:"用户描述",
+	register_time:"注册日期,如2018-12-31",
+	entrance_time:"入学年份,如2014",
+	ownScheduleNum:"发起出游的数量",
+	partakeNum:"参与出游的数量"
 }
+*****************************
 
-/getSchedule?sid=sid：获得出游计划的详细内容
+*****************************
+/user/getMyCollectingScheduleList:获得我收藏的出游计划列表
 request:
 {
-	url:”/getSchedule?sid=sid”,
-	method:”GET”,
+	url:"/user/getMyCollectingScheduleList",
+	method:"GET",
+	data:{
+	}
+}
+response:
+{
+	scheduleList:[{
+		sid:1,
+		title:"计划标题",
+		target:"计划目的地",
+		execute_time:"出发时间"
+		status:"当前状态"
+	}]
+}
+注:该方法用户获取列表，之后可根据sid使用getSchedule方法获取详细信息
+*****************************
+
+*****************************
+/user/getMyOwningScheduleList:获得我发起的出游计划列表
+request:
+{
+	url:"/user/getMyOwningScheduleList",
+	method:"GET",
+	data:{
+	}
+}
+response:
+{
+	scheduleList:[{
+		sid:1,
+		title:"计划标题",
+		target:"计划目的地",
+		execute_time:"出发时间"
+		status:"当前状态"
+	}]
+}
+注:该方法用户获取列表，之后可根据sid使用getSchedule方法获取详细信息
+*****************************
+
+*****************************
+/user/getMyPartakeScheduleList:获得我参与的出游计划列表
+request:
+{
+	url:"/user/getMyPartakeScheduleList",
+	method:"GET",
+	data:{
+	}
+}
+response:
+{
+	scheduleList:[{
+		sid:1,
+		title:"计划标题",
+		target:"计划目的地",
+		execute_time:"出发时间"
+		status:"当前状态"
+	}]
+}
+注:该方法用户获取列表，之后可根据sid使用getSchedule方法获取详细信息
+包括我即将参加/已经参加过的出游，也会包括我发起的出游
+*****************************
+
+*****************************
+/getSchedule?sid=sid:获得出游计划的详细内容
+request:
+{
+	url:"/getSchedule?sid=sid",
+	method:"GET",
 	data:{
 	}
 }
 response:
 {
 	sid:1,
-	target:”目的地”,
-	meet_place:”出发地点”,
-	start_time:”发布时间”
-	recruit_start_time:”报名开始时间”,
-	recruit_end_time:”报名截止时间”,
-	execute_time:”出发时间”,
-	end_time:”结束时间”,
-	title:”出游计划标题”,
-	content:”出游计划描述”,
-	uid:”发起人id”,
-	nickname:”发起人昵称”,
-	partookNum:”已参与的人数”,
-	announcementNum:”公告数量”
+	target:"目的地",
+	meet_place:"出发地点",
+	start_time:"发布时间"
+	recruit_start_time:"报名开始时间",
+	recruit_end_time:"报名截止时间",
+	execute_time:"集合时间",
+	end_time:"结束时间",
+	status:"出游状态",
+	title:"出游计划标题",
+	content:"出游计划描述",
+	uid:"发起人id",
+	nickname:"发起人昵称",
+	partookNum:"已参与的人数",
+	announcementNum:"公告数量"
 }
+*****************************
+
+*****************************
+/schedule/createSchedule:发布出游
+reqeust:
+{
+	url:"/schedule/createSchedule",
+	method:"POST",
+	data:{
+		target："目的地名称",
+		meet_place:"线下集合地点",
+		recruit_start_time:"报名开始时间",
+		recruit_end_time:"报名结束时间",
+		execute_time:"集合时间",
+		end_time:"出游结束时间",
+		title:"计划标题",
+		content:"计划描述",
+		partookNum:"人数"
+	}
+}
+response：
+{
+	result:"发布成功"
+}
+*****************************
+
+*****************************
+/schedule/updateSchedule:更新出游计划
+request:
+{
+	url:"/schedule/updateSchedule",
+	method:"POST",
+	data:{
+		target："目的地名称",
+		meet_place:"线下集合地点",
+		recruit_start_time:"报名开始时间",
+		recruit_end_time:"报名结束时间",
+		execute_time:"集合时间",
+		end_time:"出游结束时间",
+		title:"计划标题",
+		content:"计划描述",
+		partookNum:"人数"
+	}	
+}
+response:
+{
+	result:"修改成功"
+}
+*****************************
+
+*****************************
+/releaseAnnouncement:发布出游公告
+request:
+{
+	sid:1,
+	title:"公告标题",
+	content:"公告内容"
+}
+response:
+{
+	result:"公告发布成功"
+}
+*****************************
+
+*****************************
+/schedule/getAnnouncementList:获得计划公告列表
+request:{
+	url:"/schedule/getAnnouncementList?sid=1",
+	method:"GET",
+	data:{
+	}
+}
+response:
+{
+	announcementList:[{
+		title:"",
+		content:"",
+		release_time:""
+	}]
+}
+*****************************
+
+*****************************
+/schedule/changeScheduleOwner:转让出游计划
+request:
+{
+	url:"/schedule/changeScheduleOwner",
+	method:"POST",
+	data:{
+		sid:1,	
+		uid:1,
+		new_uid:2
+	}
+}
+response:
+{
+	result:"转让出游计划成功"
+}
+*****************************
+
+*****************************
+/schedule/partakeSchedule:申请参与出游
+request:
+{
+	url:"/schedule/partakeSchedule?sid=1",
+	method:"GET",
+	data:{
+	}
+}
+response:
+{
+	result:"申请成功"
+}
+*****************************
+
+*****************************
+/schedule/quitSchedule:退出出游计划
+request:
+{
+	url:"/schedule/quitSchedule?sid=1",
+	method:"",
+	data:{
+	}
+}
+response:
+{
+	result:"退出出游成功"
+}
+*****************************
+
+*****************************
+/schedule/receivePartake:同意用户参与出游
+request:
+{
+	url:"/schedule/receivePartake?sid=1&uid=1",
+	method:"GET",
+	data:{
+	}
+}
+response:
+{
+	result:"同意用户参与出游成功"
+}
+*****************************
+
+*****************************
+/schedule/rejectPartake:拒绝用户参与出游
+request:
+{
+	url:"/schedule/rejectPartake?sid=1?uid=1",
+	method:"GET",
+	data:{
+	}
+}
+response:
+{
+	result:"拒绝用户参与出游成功"
+}
+*****************************
+
+*****************************
+/schedule/removePartake:移除参与用户
+request:
+{
+	url:"/schedule/removePartake?sid=1&uid=1",
+	method:"GET",
+	data:{
+	}
+}
+response:
+{
+	result:"移除参与用户成功"
+}
+*****************************
+
+*****************************
+/schedule/addScheduleComment:评论出游计划
+request:
+{
+	url:"/schedule/addScheduleComment",
+	method:"POST",
+	data:{
+		sid:1,
+		uid:1,
+		at_uid:2,
+		content:"评论内容"
+	}
+}
+response:
+{
+	result:"评论成功"
+}
+注：at_uid项不可以没有，若无at的用户，置为0
+*****************************
+
+*****************************
+/schedule/likeSchedule:点赞出游计划
+request:
+{
+	url:"/schedule/likeSchedule?sid=1&uid=1",
+	method:"GET",
+	data:{
+	}
+}
+response:
+{
+	result:"点赞出游计划成功"
+}
+*****************************
+
+*****************************
+/schedule/dislikeSchedule:取消点赞出游计划
+request:
+{
+	url:"/schedule/dislikeSchedule?sid=1&uid=1",
+	method:"GET",
+	data:{
+	}
+}
+response:
+{
+	result:"取消点赞成功"
+}
+*****************************
+
+*****************************
+/schedule/collectSchedule:收藏出游计划
+request:
+{
+	url:"/schedule/collectSchedule?sid=1&uid=1",
+	method:"GET",
+	data:{
+	}
+}
+response:
+{
+	result:"收藏出游计划成功"
+}
+*****************************
+
+*****************************
+/schedule/discollectSchedule:取消收藏出游计划
+request:
+{
+	url:"/schedule/discollectSchedule?sid=1&uid=1",
+	method:"GET",
+	data:{
+	}
+}
+response:
+{
+	result:"取消收藏成功"
+}
+*****************************
+
+*****************************
+/schedule/releaseLookback:发布出游回顾
+request:
+{
+	url:"/schedule/releaseLookback",
+	method:"POST",
+	data:{
+		sid:1,
+		content:"回顾内容"
+	}
+}
+response:
+{
+	result:"回顾发布成功"
+}
+注：暂不支持图片，第二次迭代会加上
+*****************************
+
+*****************************
+/schedule/getLookbackList:获得出游回顾列表
+request:
+{
+	url:"/schedule/getLookbackList?sid=1",
+	method:"GET",
+	data:{
+	}
+}
+response:
+{
+	lookbackList:[{
+		uid:1,
+		nickname:"发布者昵称",
+		content:"回顾内容",
+		release_time:"发布时间"
+	}]
+}
+*****************************

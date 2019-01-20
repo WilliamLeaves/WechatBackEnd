@@ -18,4 +18,5 @@ public interface UserService {
 	public boolean disFollowUser(FollowUserRecord record);
 
 	public List getMyFollowingList(String myUid);
+	
 }

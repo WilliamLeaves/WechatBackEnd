@@ -12,6 +12,8 @@ public class User {
 	public int uid;
 	@Column(nullable = false)
 	public String nickname;
+	@Column(name="sex", columnDefinition="enum('男','女') null default 'male' ")
+	public String sex;
 	@Column(nullable = true)
 	public String college;
 	@Column(nullable = true)
@@ -30,6 +32,7 @@ public class User {
 	public static User getStub() {
 		User user = new User();
 		user.uid = 1;
+		user.sex ="男";
 		user.nickname = "william";
 		user.college = "NJU";
 		user.major = "software";

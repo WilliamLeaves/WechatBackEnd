@@ -34,4 +34,10 @@ public class LoginServiceImpl implements LoginService {
 		session.activeTime = TimeUtil.getCurrentTime();
 		this.sessionRepository.save(session);
 	}
+
+	@Override
+	public int findUidBySessionKey(String sessionKey) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

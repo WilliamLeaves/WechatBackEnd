@@ -6,5 +6,5 @@ public interface LoginService {
 
 	void login(String sessionKey,String openId);
 
-
+	int findUidBySessionKey(String sessionKey);
 }

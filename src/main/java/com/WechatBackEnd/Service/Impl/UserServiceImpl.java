@@ -23,36 +23,17 @@ public class UserServiceImpl implements UserService {
 	public FollowUserRecordRepository followUserRecordRepository;
 
 	@Override
-	public Map<String, Object> getUser(String uid) {
+	public User getUser(String uid) {
 		// TODO Auto-generated method stub
-		User user = userRepository.findById(Integer.parseInt(uid)).get();
-		System.out.println("");
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("uid", user.uid);
-		map.put("nickname", user.nickname);
-		map.put("sex",user.sex);
-		map.put("college", user.college);
-		map.put("major", user.major);
-		map.put("register_time", user.registerTime);
-		map.put("entrance_time", user.entranceTime);
-		map.put("describe", user.describ);
-		return map;
+		User user = userRepository.findById(Integer.parseInt(uid)).get();		
+		return user;
 	}
 
 	@Override
-	public Map<String, Object> getMyInfo(String myUid) {
+	public User getMyInfo(String myUid) {
 		// TODO Auto-generated method stub
-		User user = userRepository.findById(Integer.parseInt(myUid)).get();
-		System.out.println("");
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("uid", user.uid);
-		map.put("nickname", user.nickname);
-		map.put("college", user.college);
-		map.put("major", user.major);
-		map.put("register_time", user.registerTime);
-		map.put("entrance_time", user.entranceTime);
-		map.put("describe", user.describ);
-		return map;
+		User user = userRepository.findById(Integer.parseInt(myUid)).get();		
+		return user;
 	}
 
 	@Override

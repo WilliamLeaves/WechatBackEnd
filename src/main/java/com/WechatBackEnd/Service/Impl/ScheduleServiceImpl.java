@@ -1,10 +1,11 @@
 package com.WechatBackEnd.Service.Impl;
 
 import java.util.List;
-import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.WechatBackEnd.Dao.ScheduleRepository;
 import com.WechatBackEnd.Model.Schedule;
 import com.WechatBackEnd.Model.ScheduleAnnouncement;
 import com.WechatBackEnd.Model.ScheduleCollectRecord;
@@ -13,11 +14,14 @@ import com.WechatBackEnd.Service.ScheduleService;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
+	@Autowired
+	public ScheduleRepository scheduleRepository;
 
 	@Override
-	public Map<String, Object> getSchedule(String sid) {
+	public Schedule getSchedule(String sid) {
 		// TODO Auto-generated method stub
-		return null;
+		Schedule schedule = this.scheduleRepository.findById(Integer.parseInt(sid)).get();
+		return schedule;
 	}
 
 	@Override
@@ -82,6 +86,18 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 	@Override
 	public List getScheduleCommentList(String sid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List getMyOwningScheduleList(String myUid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List getMyPartakeScheduleList(String myUid) {
 		// TODO Auto-generated method stub
 		return null;
 	}

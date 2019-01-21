@@ -30,6 +30,8 @@ public class Schedule {
 	public String describe;
 	@Column(nullable = true)
 	public String meet_place;
+	@Column(name = "partookNum", columnDefinition = "int null default 0")
+	public int partookNum;
 
 	public Schedule() {
 	}
@@ -47,6 +49,7 @@ public class Schedule {
 		stub.meet_place = "南大鼓楼校区汉口路门";
 		stub.target = "南京博物院";
 		stub.describe = "二月一日下午一点半出发去南京博物院参观，行程大概两个半小时，欢迎南大的同学参加~";
+		stub.partookNum=15;
 		return stub;
 	}
 }

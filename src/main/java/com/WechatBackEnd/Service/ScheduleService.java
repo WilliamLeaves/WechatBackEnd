@@ -9,7 +9,7 @@ import com.WechatBackEnd.Model.ScheduleCollectRecord;
 import com.WechatBackEnd.Model.ScheduleComment;
 
 public interface ScheduleService {
-	public Map<String, Object> getSchedule(String sid);
+	public Schedule getSchedule(String sid);
 
 	public boolean addSchedule(Schedule schedule);
 
@@ -24,6 +24,10 @@ public interface ScheduleService {
 	public boolean disCollectSchedule(ScheduleCollectRecord record);
 
 	public List getMyCollectingScheduleList(String myUid);
+	
+	public List getMyOwningScheduleList(String myUid);
+	
+	public List getMyPartakeScheduleList(String myUid);
 
 	public boolean addAnnouncement(ScheduleAnnouncement announcement);
 

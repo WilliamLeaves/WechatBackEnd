@@ -209,10 +209,10 @@ response:
 *****************************
 
 *****************************
-/user/getMyCollectingScheduleList:获得我收藏的出游计划列表
+/schedule/getMyCollectingScheduleList:获得我收藏的出游计划列表
 request:
 {
-	url:"/user/getMyCollectingScheduleList",
+	url:"/schedule/getMyCollectingScheduleList",
 	method:"GET",
 	header:{
         	"Content-Type": "application/x-www-form-urlencoded",
@@ -240,10 +240,10 @@ response:
 *****************************
 
 *****************************
-/user/getMyOwningScheduleList:获得我发起的出游计划列表
+/schedule/getMyOwningScheduleList:获得我发起的出游计划列表
 request:
 {
-	url:"/user/getMyOwningScheduleList",
+	url:"/schedule/getMyOwningScheduleList",
 	method:"GET",
 	header:{
         	"Content-Type": "application/x-www-form-urlencoded",
@@ -271,10 +271,10 @@ response:
 *****************************
 
 *****************************
-/user/getMyPartakeScheduleList:获得我参与的出游计划列表
+/schedule/getMyPartakeScheduleList:获得我参与的出游计划列表
 request:
 {
-	url:"/user/getMyPartakeScheduleList",
+	url:"/schedule/getMyPartakeScheduleList",
 	method:"GET",
 	header:{
         	"Content-Type": "application/x-www-form-urlencoded",
@@ -382,6 +382,7 @@ request:
        		"sessionKey": "登录时获取的sessionKey"
       	},
 	data:{
+		sid:1,
 		target："目的地名称",
 		meet_place:"线下集合地点",
 		recruit_start_time:"报名开始时间",

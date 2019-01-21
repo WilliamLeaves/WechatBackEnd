@@ -66,14 +66,14 @@ public class UserServiceImpl implements UserService {
 	public boolean followUser(FollowUserRecord record) {
 		// TODO Auto-generated method stub
 		followUserRecordRepository.save(record);
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean disFollowUser(FollowUserRecord record) {
 		// TODO Auto-generated method stub
 		followUserRecordRepository.save(record);
-		return false;
+		return true;
 	}
 
 	@Override

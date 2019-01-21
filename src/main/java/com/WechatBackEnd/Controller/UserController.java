@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,7 +24,8 @@ public class UserController {
 	UserService userService;
 
 	@RequestMapping(value = "/getUser")
-	public Map<String, Object> getUser(String uid) {
+	public Map<String, Object> getUser(@RequestHeader("sessionKey") String sessionKey,String uid) {
+		System.out.println(sessionKey);
 		Map<String, Object> res = new HashMap<String, Object>();
 		return userService.getUser(uid);
 	}
@@ -57,9 +59,10 @@ public class UserController {
 	@ResponseBody
 	public String followUser(HttpServletRequest req) {
 		FollowUserRecord record = new FollowUserRecord();
+		System.out.println(req.getHeader("sessionKey"));
 		// findsession
 		record.uid = 1;
-		record.followUserId = Integer.parseInt(req.getAttribute("followed_uid").toString());
+		record.followUserId = Integer.parseInt(req.getParameter("followed_uid").toString());
 		record.isPositive = "Y";
 		record.recordTime = TimeUtil.getCurrentTime();
 		if (userService.followUser(record)) {

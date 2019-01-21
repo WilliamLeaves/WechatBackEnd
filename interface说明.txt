@@ -1,4 +1,48 @@
 *****************************
+/register:
+request:
+{
+	url:"/register",
+	method:"POST",
+	header:{
+		"Content-Type": "application/x-www-form-urlencoded"
+	},
+	data:{
+		
+	}
+}
+response:
+{
+	result:"1/-1",
+	message:"注册成功/注册失败",
+	data:{
+	}
+}
+*****************************
+
+*****************************
+/:登录
+request:
+{
+	url:"/",
+	method:"POST",
+	header:{
+		"Content-Type": "application/x-www-form-urlencoded"
+	},
+	data:{
+		userCode:"code"
+	}
+}
+response:
+{
+	result:"1/2/-1",
+	message:"登录成功/首次登录请注册/登录失败",
+	data:{
+	}
+}
+*****************************
+
+*****************************
 /getUser:获取用户信息
 request:
 {
@@ -13,16 +57,20 @@ request:
 }
 response:
 {
-	uid:"用户id",
-	nickname:"用户昵称",
-	sex："男",
-	college:"学校名称",
-	majod:"专业名称",
-	describe:"用户描述",
-	register_time:"注册日期,如2018-12-31",
-	entrance_time:"入学年份,如2014",
-	ownScheduleNum:"发起出游的数量",
-	partakeNum:"参与出游的数量"
+	result:"1",
+	messgae:"获取用户信息成功",
+	data:{
+		uid:"用户id",
+		nickname:"用户昵称",
+		sex："男",
+		college:"学校名称",
+		majod:"专业名称",
+		describe:"用户描述",
+		register_time:"注册日期,如2018-12-31",
+		entrance_time:"入学年份,如2014",
+		ownScheduleNum:"发起出游的数量",
+		partakeNum:"参与出游的数量"
+	}
 }
 *****************************
 
@@ -42,13 +90,15 @@ request:
 		college:"学校名称",
 		majod:"专业名称",
 		describe:"用户描述",
-entrance_time:"入学年份,如2014"
-		}
+		entrance_time:"入学年份,如2014"
 	}
 }
 respose:
 {
-	result:"修改成功"
+	result:"1",
+	message:"修改用户信息成功",
+	data:{
+	}
 }
 *****************************
 
@@ -68,7 +118,10 @@ request
 }
 response
 {
-	result:"关注成功"
+	result:"1",
+	message:"关注用户成功",
+	data:{
+	}
 }
 *****************************
 
@@ -88,7 +141,10 @@ request:
 }
 response:
 {
-	result:"取消关注成功"
+	result:"1",
+	message:"取消关注用户成功",
+	data:{
+	}
 }	
 *****************************
 
@@ -107,11 +163,16 @@ request:
 }
 response:
 {
-	follow_list:[{
-		uid:"uid",
-		nickname:"用户昵称",
-		follow_time:"关注时间"
-	}]
+	result:"1",
+	message:"获得我的关注列表成功",
+	data:{
+		follow_list:[{
+			uid:"uid",
+			nickname:"用户昵称",
+			follow_time:"关注时间"
+		}]
+	}
+	
 }
 *****************************
 
@@ -129,16 +190,21 @@ request:{
 }
 response:
 {
-	uid:"用户id",
-	nickname:"用户昵称",
-	sex:"男",
-	college:"学校名称",
-	majod:"专业名称",
-	describe:"用户描述",
-	register_time:"注册日期,如2018-12-31",
-	entrance_time:"入学年份,如2014",
-	ownScheduleNum:"发起出游的数量",
-	partakeNum:"参与出游的数量"
+	result:"1",
+	message:"获得我的个人信息成功",
+	data:{
+		uid:"用户id",
+		nickname:"用户昵称",
+		sex:"男",
+		college:"学校名称",
+		majod:"专业名称",
+		describe:"用户描述",
+		register_time:"注册日期,如2018-12-31",
+		entrance_time:"入学年份,如2014",
+		ownScheduleNum:"发起出游的数量",
+		partakeNum:"参与出游的数量"
+	}
+	
 }
 *****************************
 
@@ -157,13 +223,18 @@ request:
 }
 response:
 {
-	scheduleList:[{
-		sid:1,
-		title:"计划标题",
-		target:"计划目的地",
-		execute_time:"出发时间"
-		status:"当前状态"
-	}]
+	result:"1",
+	message:"获得我收藏的出游计划列表成功",
+	data:{
+		scheduleList:[{
+			sid:1,
+			title:"计划标题",
+			target:"计划目的地",
+			execute_time:"出发时间"
+			status:"当前状态"
+		}]
+	}
+	
 }
 注:该方法用户获取列表，之后可根据sid使用getSchedule方法获取详细信息
 *****************************
@@ -183,13 +254,18 @@ request:
 }
 response:
 {
-	scheduleList:[{
-		sid:1,
-		title:"计划标题",
-		target:"计划目的地",
-		execute_time:"出发时间"
-		status:"当前状态"
-	}]
+	result:"1",
+	message:"获得我发起的出游计划列表成功",
+	data:{
+		scheduleList:[{
+			sid:1,
+			title:"计划标题",
+			target:"计划目的地",
+			execute_time:"出发时间"
+			status:"当前状态"
+		}]
+	}
+	
 }
 注:该方法用户获取列表，之后可根据sid使用getSchedule方法获取详细信息
 *****************************
@@ -209,13 +285,18 @@ request:
 }
 response:
 {
-	scheduleList:[{
-		sid:1,
-		title:"计划标题",
-		target:"计划目的地",
-		execute_time:"出发时间"
-		status:"当前状态"
-	}]
+	result:"1",
+	message:"获得我参与的出游计划列表成功",
+	data:{
+		scheduleList:[{
+			sid:1,
+			title:"计划标题",
+			target:"计划目的地",
+			execute_time:"出发时间"
+			status:"当前状态"
+		}]
+	}
+	
 }
 注:该方法用户获取列表，之后可根据sid使用getSchedule方法获取详细信息
 包括我即将参加/已经参加过的出游，也会包括我发起的出游
@@ -236,21 +317,26 @@ request:
 }
 response:
 {
-	sid:1,
-	target:"目的地",
-	meet_place:"出发地点",
-	start_time:"发布时间"
-	recruit_start_time:"报名开始时间",
-	recruit_end_time:"报名截止时间",
-	execute_time:"集合时间",
-	end_time:"结束时间",
-	status:"出游状态",
-	title:"出游计划标题",
-	content:"出游计划描述",
-	uid:"发起人id",
-	nickname:"发起人昵称",
-	partookNum:"已参与的人数",
-	announcementNum:"公告数量"
+	result:"1",
+	message:"获得出游计划详细内容成功",
+	data:{
+		sid:1,
+		target:"目的地",
+		meet_place:"出发地点",
+		start_time:"发布时间"
+		recruit_start_time:"报名开始时间",
+		recruit_end_time:"报名截止时间",
+		execute_time:"集合时间",
+		end_time:"结束时间",
+		status:"出游状态",
+		title:"出游计划标题",
+		content:"出游计划描述",
+		uid:"发起人id",
+		nickname:"发起人昵称",
+		partookNum:"已参与的人数",
+		announcementNum:"公告数量"
+	}
+	
 }
 *****************************
 
@@ -278,7 +364,10 @@ reqeust:
 }
 response：
 {
-	result:"发布成功"
+	result:"1",
+	message:"发布出游计划成功",
+	data:{
+	}
 }
 *****************************
 
@@ -306,7 +395,10 @@ request:
 }
 response:
 {
-	result:"修改成功"
+	result:"1",
+	message:"更新出游计划成功",
+	data:{
+	}
 }
 *****************************
 
@@ -328,7 +420,10 @@ request:
 }
 response:
 {
-	result:"公告发布成功"
+	result:"1",
+	message:"发布出游公告成功",
+	data:{
+	}
 }
 *****************************
 
@@ -347,11 +442,16 @@ request:
 }
 response:
 {
-	announcementList:[{
-		title:"",
-		content:"",
-		release_time:""
-	}]
+	result:"1",
+	message:"获得计划公告列表成功",
+	data:{
+		announcementList:[{
+			title:"",
+			content:"",
+			release_time:""
+		}]
+	}
+	
 }
 *****************************
 
@@ -373,7 +473,10 @@ request:
 }
 response:
 {
-	result:"转让出游计划成功"
+	result:"1",
+	message:"转让出游计划成功",
+	data:{
+	}
 }
 *****************************
 
@@ -392,7 +495,10 @@ request:
 }
 response:
 {
-	result:"申请成功"
+	result:"1",
+	message:"申请参与出游计划成功",
+	data:{
+	}
 }
 *****************************
 
@@ -411,7 +517,10 @@ request:
 }
 response:
 {
-	result:"退出出游成功"
+	result:"1",
+	message:"退出出游计划成功",
+	data:{
+	}
 }
 *****************************
 
@@ -430,7 +539,10 @@ request:
 }
 response:
 {
-	result:"同意用户参与出游成功"
+	result:"1",
+	message:"同意用户参与出游成功",
+	data:{
+	}
 }
 *****************************
 
@@ -449,7 +561,10 @@ request:
 }
 response:
 {
-	result:"拒绝用户参与出游成功"
+	result:"1",
+	message:"拒绝用户参与出游成功",
+	data:{
+	}
 }
 *****************************
 
@@ -468,7 +583,10 @@ request:
 }
 response:
 {
-	result:"移除参与用户成功"
+	result:"1",
+	message:"移除参与用户成功",
+	data:{
+	}
 }
 *****************************
 
@@ -491,7 +609,10 @@ request:
 }
 response:
 {
-	result:"评论成功"
+	result:"1",
+	message:"评论出游计划成功",
+	data:{
+	}
 }
 注：at_uid项不可以没有，若无at的用户，置为0
 *****************************
@@ -511,7 +632,10 @@ request:
 }
 response:
 {
-	result:"点赞出游计划成功"
+	result:"1",
+	message:"点赞出游计划成功",
+	data:{
+	}
 }
 *****************************
 
@@ -530,7 +654,10 @@ request:
 }
 response:
 {
-	result:"取消点赞成功"
+	result:"1",
+	message:"取消点赞出游计划成功",
+	data:{
+	}
 }
 *****************************
 
@@ -549,7 +676,10 @@ request:
 }
 response:
 {
-	result:"收藏出游计划成功"
+	result:"1",
+	message:"收藏出游计划成功",
+	data:{
+	}
 }
 *****************************
 
@@ -568,7 +698,10 @@ request:
 }
 response:
 {
-	result:"取消收藏成功"
+	result:"1",
+	message:"取消收藏计划成功",
+	data:{
+	}
 }
 *****************************
 
@@ -589,7 +722,10 @@ request:
 }
 response:
 {
-	result:"回顾发布成功"
+	result:"1",
+	message:"发布成功",
+	data:{
+	}
 }
 注：暂不支持图片，第二次迭代会加上
 *****************************
@@ -609,11 +745,16 @@ request:
 }
 response:
 {
-	lookbackList:[{
-		uid:1,
-		nickname:"发布者昵称",
-		content:"回顾内容",
-		release_time:"发布时间"
-	}]
+	result:"",
+	message:"",
+	data:{
+		lookbackList:[{
+			uid:1,
+			nickname:"发布者昵称",
+			content:"回顾内容",
+			release_time:"发布时间"
+		}]
+	}
+	
 }
 *****************************

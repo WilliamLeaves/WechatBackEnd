@@ -14,9 +14,9 @@ public class ScheduleAnnouncement {
 	@Column(name = "sid", nullable = false)
 	public int sid;
 	@Column(name = "announcement_title", nullable = true)
-	public int announcement_title;
+	public String announcement_title;
 	@Column(name = "announcement_content", nullable = true)
-	public int announcement_content;
+	public String announcement_content;
 	@Column(name = "release_time", nullable = true)
 	public String release_time;
 
@@ -28,7 +28,7 @@ public class ScheduleAnnouncement {
 		ScheduleAnnouncement record=new ScheduleAnnouncement();
 		record.recordId=1;
 		record.sid=1;
-		record.release_time="";
+		record.release_time="2019-01-31 14:00:00";
 		return record;
 	}
 }

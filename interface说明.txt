@@ -622,7 +622,7 @@ response:
 /schedule/likeSchedule:点赞出游计划
 request:
 {
-	url:"/schedule/likeSchedule?sid=1&uid=1",
+	url:"/schedule/likeSchedule?sid=1",
 	method:"GET",
 	header:{
         	"Content-Type": "application/x-www-form-urlencoded",
@@ -644,7 +644,7 @@ response:
 /schedule/dislikeSchedule:取消点赞出游计划
 request:
 {
-	url:"/schedule/dislikeSchedule?sid=1&uid=1",
+	url:"/schedule/dislikeSchedule?sid=1",
 	method:"GET",
 	header:{
         	"Content-Type": "application/x-www-form-urlencoded",
@@ -666,7 +666,7 @@ response:
 /schedule/collectSchedule:收藏出游计划
 request:
 {
-	url:"/schedule/collectSchedule?sid=1&uid=1",
+	url:"/schedule/collectSchedule?sid=1",
 	method:"GET",
 	header:{
         	"Content-Type": "application/x-www-form-urlencoded",
@@ -688,7 +688,7 @@ response:
 /schedule/discollectSchedule:取消收藏出游计划
 request:
 {
-	url:"/schedule/discollectSchedule?sid=1&uid=1",
+	url:"/schedule/discollectSchedule?sid=1",
 	method:"GET",
 	header:{
         	"Content-Type": "application/x-www-form-urlencoded",

@@ -1,12 +1,12 @@
 package com.WechatBackEnd.Service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.WechatBackEnd.Model.Schedule;
 import com.WechatBackEnd.Model.ScheduleAnnouncement;
 import com.WechatBackEnd.Model.ScheduleCollectRecord;
 import com.WechatBackEnd.Model.ScheduleComment;
+import com.WechatBackEnd.Model.ScheduleLike;
 
 public interface ScheduleService {
 	public Schedule getSchedule(String sid);
@@ -19,14 +19,12 @@ public interface ScheduleService {
 
 	public boolean updateSchedule(Schedule schedule);
 
-	public boolean collectSchedule(ScheduleCollectRecord record);
-
-	public boolean disCollectSchedule(ScheduleCollectRecord record);
+	public boolean addCollectScheduleRecord(ScheduleCollectRecord record);
 
 	public List getMyCollectingScheduleList(String myUid);
-	
+
 	public List getMyOwningScheduleList(String myUid);
-	
+
 	public List getMyPartakeScheduleList(String myUid);
 
 	public boolean addAnnouncement(ScheduleAnnouncement announcement);
@@ -36,4 +34,7 @@ public interface ScheduleService {
 	public boolean addScheduleComment(ScheduleComment comment);
 
 	public List getScheduleCommentList(String sid);
+
+	public boolean addScheduleLikeRecord(ScheduleLike scheduleLike);
+
 }

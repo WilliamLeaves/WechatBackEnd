@@ -2,8 +2,6 @@ package com.WechatBackEnd.ServiceTest;
 
 import static org.hamcrest.CoreMatchers.is;
 
-import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,8 +24,8 @@ public class UserServiceTest {
 
 	@Test
 	public void getUserTest() {
-		Map<String, Object> map = userService.getUser("1");
-		Assert.assertThat(map.get("nickname"), is("william"));
+		User user= userService.getUser("1");
+		Assert.assertThat(user.nickname, is("william"));
 	}
 
 	@Test
@@ -36,8 +34,8 @@ public class UserServiceTest {
 		String testStr = String.valueOf(Math.random());
 		user.describ = testStr;
 		userService.updateUserInfo(user);
-		Map<String, Object> userInfo = userService.getUser("1");
-		String resultStr = (String) userInfo.get("describe");
+		User userTest= userService.getUser("1");
+		String resultStr = userTest.describ;
 		Assert.assertEquals(testStr, resultStr);
 	}
 

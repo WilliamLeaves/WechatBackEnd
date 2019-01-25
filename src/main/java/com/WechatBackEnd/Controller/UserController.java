@@ -156,10 +156,9 @@ public class UserController {
 		int uid = this.loginService.findUidBySessionKey(sessionKey);
 		Map<String, Object> res = new HashMap<String, Object>();
 		if (uid != -1) {
-			String myUid = String.valueOf(this.loginService.findUidBySessionKey(sessionKey));
 			res.put("result", "1");
 			res.put("message", "获取关注列表成功");
-			res.put("data", this.getFollowList(myUid));
+			res.put("data", this.userService.getMyFollowingList(String.valueOf(uid)));
 		} else {
 			res.put("result", "2");
 			res.put("message", "请重新登录");

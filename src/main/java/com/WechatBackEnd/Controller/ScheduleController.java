@@ -1,6 +1,5 @@
 package com.WechatBackEnd.Controller;
 
-import java.sql.Time;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +16,7 @@ import com.WechatBackEnd.Model.ScheduleAnnouncement;
 import com.WechatBackEnd.Model.ScheduleCollectRecord;
 import com.WechatBackEnd.Model.ScheduleComment;
 import com.WechatBackEnd.Model.ScheduleLike;
+import com.WechatBackEnd.Model.ScheduleLookback;
 import com.WechatBackEnd.Service.LoginService;
 import com.WechatBackEnd.Service.ScheduleService;
 import com.WechatBackEnd.Util.TimeUtil;
@@ -49,7 +49,7 @@ public class ScheduleController {
 			data.put("uid", schedule.uid);
 
 			// 需要额外逻辑的值
-			data.put("status", 1);
+			data.put("status", schedule.getStatus());
 			data.put("nickname", 1);
 			data.put("partakeNum", 1);
 			data.put("announcementNum", 1);
@@ -316,16 +316,16 @@ public class ScheduleController {
 		int myUid = this.loginService.findUidBySessionKey(sessionKey);
 		if (myUid != -1) {
 			ScheduleCollectRecord scheduleCollectRecord = new ScheduleCollectRecord();
-			scheduleCollectRecord.sid=Integer.parseInt(sid);
-			scheduleCollectRecord.uid=myUid;
-			scheduleCollectRecord.recordTime=TimeUtil.getCurrentTime();
-			scheduleCollectRecord.recordId=0;
-			scheduleCollectRecord.isPositive="Y";
-			if(this.scheduleService.addCollectScheduleRecord(scheduleCollectRecord)) {
+			scheduleCollectRecord.sid = Integer.parseInt(sid);
+			scheduleCollectRecord.uid = myUid;
+			scheduleCollectRecord.recordTime = TimeUtil.getCurrentTime();
+			scheduleCollectRecord.recordId = 0;
+			scheduleCollectRecord.isPositive = "Y";
+			if (this.scheduleService.addCollectScheduleRecord(scheduleCollectRecord)) {
 				res.put("result", "1");
 				res.put("message", "收藏计划成功");
 				res.put("data", "");
-			}else {
+			} else {
 				res.put("result", "-1");
 				res.put("message", "收藏计划失败");
 				res.put("data", "");
@@ -344,16 +344,16 @@ public class ScheduleController {
 		int myUid = this.loginService.findUidBySessionKey(sessionKey);
 		if (myUid != -1) {
 			ScheduleCollectRecord scheduleCollectRecord = new ScheduleCollectRecord();
-			scheduleCollectRecord.sid=Integer.parseInt(sid);
-			scheduleCollectRecord.uid=myUid;
-			scheduleCollectRecord.recordTime=TimeUtil.getCurrentTime();
-			scheduleCollectRecord.recordId=0;
-			scheduleCollectRecord.isPositive="N";
-			if(this.scheduleService.addCollectScheduleRecord(scheduleCollectRecord)) {
+			scheduleCollectRecord.sid = Integer.parseInt(sid);
+			scheduleCollectRecord.uid = myUid;
+			scheduleCollectRecord.recordTime = TimeUtil.getCurrentTime();
+			scheduleCollectRecord.recordId = 0;
+			scheduleCollectRecord.isPositive = "N";
+			if (this.scheduleService.addCollectScheduleRecord(scheduleCollectRecord)) {
 				res.put("result", "1");
 				res.put("message", "取消收藏计划成功");
 				res.put("data", "");
-			}else {
+			} else {
 				res.put("result", "-1");
 				res.put("message", "取消收藏计划失败");
 				res.put("data", "");
@@ -371,10 +371,22 @@ public class ScheduleController {
 		Map<String, Object> res = new HashMap<String, Object>();
 		int myUid = this.loginService.findUidBySessionKey(req.getParameter("sessionKey"));
 		if (myUid != -1) {
+			ScheduleLookback scheduleLookback = new ScheduleLookback();
+			scheduleLookback.recordId = 0;
+			scheduleLookback.sid = Integer.parseInt(req.getParameter("sid"));
+			scheduleLookback.uid = myUid;
+			scheduleLookback.content = req.getParameter("content");
+			scheduleLookback.recordTime = TimeUtil.getCurrentTime();
+			if (this.scheduleService.addScheduleLookback(scheduleLookback)) {
+				res.put("result", "1");
+				res.put("message", "发布出游回顾成功");
+				res.put("data", "");
+			} else {
+				res.put("result", "-1");
+				res.put("message", "发布出游回顾失败");
+				res.put("data", "");
+			}
 
-			res.put("result", "1");
-			res.put("message", "发布计划公告成功");
-			res.put("data", "");
 		} else {
 			res.put("result", "2");
 			res.put("message", "请重新登录");
@@ -388,10 +400,9 @@ public class ScheduleController {
 		Map<String, Object> res = new HashMap<String, Object>();
 		int myUid = this.loginService.findUidBySessionKey(req.getParameter("sessionKey"));
 		if (myUid != -1) {
-
 			res.put("result", "1");
-			res.put("message", "发布计划公告成功");
-			res.put("data", "");
+			res.put("message", "获取计划回顾列表成功");
+			res.put("data", this.scheduleService.getScheduleLookbackList(req.getParameter("sid")));
 		} else {
 			res.put("result", "2");
 			res.put("message", "请重新登录");

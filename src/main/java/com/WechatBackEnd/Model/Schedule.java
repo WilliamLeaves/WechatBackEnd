@@ -1,9 +1,13 @@
 package com.WechatBackEnd.Model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
+import com.WechatBackEnd.Util.TimeUtil;
 
 @Entity
 public class Schedule {
@@ -49,7 +53,50 @@ public class Schedule {
 		stub.meet_place = "南大鼓楼校区汉口路门";
 		stub.target = "南京博物院";
 		stub.describe = "二月一日下午一点半出发去南京博物院参观，行程大概两个半小时，欢迎南大的同学参加~";
-		stub.partookNum=15;
+		stub.partookNum = 15;
 		return stub;
+	}
+
+	public String timeRationalityJudge() {
+		String message = "";
+		boolean isRationality = true;
+		if (TimeUtil.isEarlierThan(TimeUtil.getCurrentTime(), this.start_time)) {
+			message += "startTimeError:计划发起时间在当前时间之后;\r\n";
+			isRationality = false;
+		}
+		if (TimeUtil.isEarlierThan(this.recruit_start_time, this.start_time)) {
+			message += "recruitStartTimeError:计划开始时间在计划报名开始时间之前;\r\n";
+			isRationality = false;
+		}
+		if (TimeUtil.isEarlierThan(this.recruit_end_time, this.recruit_start_time)) {
+			message += "recruitEndTimeError:计划报名开始时间在计划报名结束时间之前;\r\n";
+			isRationality = false;
+		}
+		if (TimeUtil.isEarlierThan(this.execute_time, this.recruit_end_time)) {
+			message += "executeTimeError:计划报名结束时间在计划执行时间之前;\r\n";
+			isRationality = false;
+		}
+		if (TimeUtil.isEarlierThan(this.end_time, this.execute_time)) {
+			message += "endTimeError:计划执行时间在计划结束时间之后;\r\n";
+			isRationality = false;
+		}
+		return message;
+	}
+
+	public String getStatus() {
+		String status = "";
+		String now = TimeUtil.getCurrentTime();
+		if (TimeUtil.isEarlierThan(this.end_time, now)) {
+			status = "已结束";
+		} else if (TimeUtil.isEarlierThan(this.execute_time, now)) {
+			status = "正在进行";
+		} else if (TimeUtil.isEarlierThan(this.recruit_end_time, now)) {
+			status = "报名截止";
+		} else if (TimeUtil.isEarlierThan(this.recruit_start_time, now)) {
+			status = "报名中";
+		} else if (TimeUtil.isEarlierThan(this.start_time, now)) {
+			status = "尚未开始报名";
+		}
+		return status;
 	}
 }

@@ -7,15 +7,12 @@ import com.WechatBackEnd.Model.ScheduleAnnouncement;
 import com.WechatBackEnd.Model.ScheduleCollectRecord;
 import com.WechatBackEnd.Model.ScheduleComment;
 import com.WechatBackEnd.Model.ScheduleLike;
+import com.WechatBackEnd.Model.ScheduleLookback;
 
 public interface ScheduleService {
 	public Schedule getSchedule(String sid);
 
 	public boolean addSchedule(Schedule schedule);
-
-	public List getPartookScheduleListOfUser(String uid);
-
-	public List getLaunchScheduleListOfUser(String uid);
 
 	public boolean updateSchedule(Schedule schedule);
 
@@ -36,5 +33,9 @@ public interface ScheduleService {
 	public List getScheduleCommentList(String sid);
 
 	public boolean addScheduleLikeRecord(ScheduleLike scheduleLike);
+
+	public boolean addScheduleLookback(ScheduleLookback scheduleLookback);
+
+	public List getScheduleLookbackList(String sid);
 
 }

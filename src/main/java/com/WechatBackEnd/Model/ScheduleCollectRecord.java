@@ -17,7 +17,7 @@ public class ScheduleCollectRecord {
 	public int sid;
 	@Column(name = "record_time", nullable = false)
 	public String recordTime;
-	@Column(name = "is_positive", nullable = false)
+	@Column(name = "is_positive", columnDefinition="enum('Y','N') null default 'Y'")
 	public String isPositive;
 
 	public ScheduleCollectRecord() {

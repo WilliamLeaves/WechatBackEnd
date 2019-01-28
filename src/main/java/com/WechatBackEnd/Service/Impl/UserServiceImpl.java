@@ -25,14 +25,14 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUser(String uid) {
 		// TODO Auto-generated method stub
-		User user = userRepository.findById(Integer.parseInt(uid)).get();		
+		User user = userRepository.findById(Integer.parseInt(uid)).get();
 		return user;
 	}
 
 	@Override
 	public User getMyInfo(String myUid) {
 		// TODO Auto-generated method stub
-		User user = userRepository.findById(Integer.parseInt(myUid)).get();		
+		User user = userRepository.findById(Integer.parseInt(myUid)).get();
 		return user;
 	}
 
@@ -79,6 +79,16 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public boolean register(User user) {
+		// TODO Auto-generated method stub
+		if (this.userRepository.save(user) != null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

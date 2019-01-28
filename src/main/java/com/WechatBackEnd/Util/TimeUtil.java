@@ -7,6 +7,7 @@ import java.util.Date;
 
 public class TimeUtil {
 	private static long TIME1 = 1000 * 60 * 60 * 24;
+	private static long ACTIVETIME = 1000 * 60 * 15;
 
 	public static String getCurrentTime() {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 设置日期格式
@@ -44,7 +45,29 @@ public class TimeUtil {
 			Date date2 = df.parse(datetime2);
 			long s1 = date1.getTime();
 			long s2 = date2.getTime();
-			if (s2 - s1 < TIME1) {
+			long delta = s2 - s1;
+			if (delta < TIME1) {
+				return false;
+			} else {
+				return true;
+			}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public static boolean isLessThanActiveTime(String activeTime, String currentTime) {
+		// TODO Auto-generated method stub
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		try {
+			Date date1 = df.parse(activeTime);
+			Date date2 = df.parse(currentTime);
+			long s1 = date1.getTime();
+			long s2 = date2.getTime();
+			long delta = s2 - s1;
+			if (delta < TIME1) {
 				return false;
 			} else {
 				return true;

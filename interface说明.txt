@@ -1,5 +1,5 @@
 *****************************
-/register:
+/register:注册用户信息
 request:
 {
 	url:"/register",
@@ -8,7 +8,12 @@ request:
 		"Content-Type": "application/x-www-form-urlencoded"
 	},
 	data:{
-		
+		nickname:"昵称",
+		sex:"男",
+		college:"学校",
+		major:"专业",
+		entrance_time:"2017",
+		describe:"用户描述"
 	}
 }
 response:
@@ -35,6 +40,7 @@ request:
 }
 response:
 {
+	sessionKey:"sessionKey",
 	result:"1/2/-1",
 	message:"登录成功/首次登录请注册/登录失败",
 	data:{

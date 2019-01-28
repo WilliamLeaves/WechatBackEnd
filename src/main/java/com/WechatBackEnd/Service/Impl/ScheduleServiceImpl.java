@@ -20,6 +20,7 @@ import com.WechatBackEnd.Model.ScheduleCollectRecord;
 import com.WechatBackEnd.Model.ScheduleComment;
 import com.WechatBackEnd.Model.ScheduleLike;
 import com.WechatBackEnd.Model.ScheduleLookback;
+import com.WechatBackEnd.Model.SchedulePartake;
 import com.WechatBackEnd.Service.ScheduleService;
 import com.WechatBackEnd.Util.TimeUtil;
 
@@ -53,6 +54,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 		String message = schedule.timeRationalityJudge();
 		if (message.equals("")) {
 			if (this.scheduleRepository.save(schedule) != null) {
+				SchedulePartake schedulePartake = new SchedulePartake();
+				schedulePartake.recordId = 0;
+				schedulePartake.sid = schedule.sid;
+				schedulePartake.uid = schedule.uid;
+				schedulePartake.recordTime = TimeUtil.getCurrentTime();
+				schedulePartake.status = "partook";
+				this.schedulePartakeRepository.save(schedulePartake);
 				return true;
 			} else {
 				return false;
@@ -67,7 +75,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 	@Override
 	public boolean updateSchedule(Schedule schedule) {
 		// TODO Auto-generated method stub
-		if (TimeUtil.isLessThanMinTime(TimeUtil.getCurrentTime(), schedule.recruit_end_time)) {
+		if (!TimeUtil.isLessThanMinTime(TimeUtil.getCurrentTime(), schedule.execute_time)) {
 			System.out.println("执行前1天无法修改出游计划细节");
 			return false;
 		} else {
@@ -171,7 +179,18 @@ public class ScheduleServiceImpl implements ScheduleService {
 	@Override
 	public List getMyPartakeScheduleList(String myUid) {
 		// TODO Auto-generated method stub
-		return null;
+		List<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();
+		List<Schedule> list = this.schedulePartakeRepository.findMyPartakeList(myUid);
+		for (Schedule s : list) {
+			HashMap<String, Object> m = new HashMap<String, Object>();
+			m.put("sid", s.sid);
+			m.put("title", s.title);
+			m.put("target", s.target);
+			m.put("execute_time", s.execute_time);
+			m.put("status", s.getStatus());
+			result.add(m);
+		}
+		return result;
 	}
 
 	@Override
@@ -207,8 +226,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 	@Override
 	public List getScheduleLookbackList(String sid) {
 		// TODO Auto-generated method stub
-		
-		return null;
+		return this.scheduleLookbackRepository.findLookbackList(sid);
 	}
 
 }

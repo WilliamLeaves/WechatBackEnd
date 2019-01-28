@@ -30,7 +30,7 @@ public class LoginController {
 		String sessionKey = "";
 		String openId = "";
 		String code = req.getParameter("userCode");
-		System.out.println(code);
+		//System.out.println(code);
 		String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + Constant.APPID + "&secret="
 				+ Constant.SECRETKEY + "&js_code=" + code + "&grant_type=authorization_code";
 		RestTemplate restTemplate = new RestTemplate();
@@ -39,17 +39,20 @@ public class LoginController {
 			Map m = new Gson().fromJson(responseEntity.getBody(), Map.class);
 			sessionKey = (String) m.get("session_key");
 			openId = (String) m.get("openid");
+			System.out.println("sessionkey:"+sessionKey);
+			System.out.println("openid:"+openId);
 			// 服务层自定义登录态
 			{
-				//判断是否为新用户
-				if(this.loginService.isOldUser(openId)) {
-					this.loginService.login(sessionKey,openId);
+				// 判断是否为新用户
+				if (this.loginService.isOldUser(openId)) {
+					this.loginService.login(sessionKey, openId);
 					res.put("sessionKey", sessionKey);
-					res.put("result","1");
+					res.put("result", "1");
 					res.put("message", "登录成功");
-				}else {
+				} else {
 					res.put("result", "2");
 					res.put("message", "首次登录请注册");
+					// this.loginService.login(sessionKey, openId);
 				}
 			}
 		} else {

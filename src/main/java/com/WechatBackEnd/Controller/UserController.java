@@ -26,6 +26,29 @@ public class UserController {
 	@Autowired
 	LoginService loginService;
 
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public Map<String, Object> register(HttpServletRequest req) {
+		Map<String, Object> res = new HashMap<String, Object>();
+		User user = new User();
+		user.uid = 0;
+		user.nickname = req.getParameter("nickname");
+		user.sex = req.getParameter("sex");
+		user.college = req.getParameter("college");
+		user.major = req.getParameter("major");
+		user.entranceTime = req.getParameter("entrance_time");
+		user.describ = req.getParameter("describe");
+		if (this.userService.register(user)) {
+			res.put("result", "1");
+			res.put("message", "注册成功");
+			res.put("data", "");
+		} else {
+			res.put("result", "-1");
+			res.put("message", "注册失败");
+			res.put("data", "");
+		}
+		return res;
+	}
+
 	@RequestMapping(value = "/getUser")
 	public Map<String, Object> getUser(@RequestHeader("sessionKey") String sessionKey, String uid) {
 		Map<String, Object> res = new HashMap<String, Object>();
@@ -68,7 +91,7 @@ public class UserController {
 			map.put("entrance_time", user.entranceTime);
 			map.put("describe", user.describ);
 			res.put("result", "1");
-			res.put("message", "用户信息修改成功");
+			res.put("message", "获取个人信息成功");
 			res.put("data", map);
 		} else {
 			res.put("result", "2");

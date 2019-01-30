@@ -11,15 +11,15 @@ public class ScheduleComment {
 	@Id
 	@Column(name = "recordid", nullable = false)
 	public int recordId;
-	@Column(name = "sid", nullable = false)
+	@Column(name = "sid", columnDefinition = "int not null")
 	public int sid;
-	@Column(name = "uid", nullable = false)
+	@Column(name = "uid", columnDefinition = "int not null")
 	public int uid;
-	@Column(name = "at_uid", nullable = true)
+	@Column(name = "at_uid", columnDefinition = "int null")
 	public int atUid;
-	@Column(name = "comment_content", nullable = true)
+	@Column(name = "comment_content", columnDefinition = "varchar(255) null default '缺失'")
 	public String commentContent;
-	@Column(name = "record_time", nullable = true)
+	@Column(name = "record_time", columnDefinition = "datetime null default '2000-01-01 00:00:00'")
 	public String recordTime;
 
 	public ScheduleComment() {

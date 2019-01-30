@@ -11,13 +11,13 @@ public class ScheduleAnnouncement {
 	@Id
 	@Column(name = "recordid", nullable = false)
 	public int recordId;
-	@Column(name = "sid", nullable = false)
+	@Column(name = "sid", columnDefinition = "int not null")
 	public int sid;
-	@Column(name = "announcement_title", nullable = true)
+	@Column(name = "announcement_title", columnDefinition = "varchar(255) null default '缺失'")
 	public String announcement_title;
-	@Column(name = "announcement_content", nullable = true)
+	@Column(name = "announcement_content", columnDefinition = "varchar(255) null default '缺失'")
 	public String announcement_content;
-	@Column(name = "release_time", nullable = true)
+	@Column(name = "release_time", columnDefinition = "datetime null default '2000-01-01 00:00:00' ")
 	public String release_time;
 
 	public ScheduleAnnouncement() {
@@ -25,10 +25,10 @@ public class ScheduleAnnouncement {
 	}
 
 	public static ScheduleAnnouncement getStub() {
-		ScheduleAnnouncement record=new ScheduleAnnouncement();
-		record.recordId=1;
-		record.sid=1;
-		record.release_time="2019-01-31 14:00:00";
+		ScheduleAnnouncement record = new ScheduleAnnouncement();
+		record.recordId = 1;
+		record.sid = 1;
+		record.release_time = "2019-01-31 14:00:00";
 		return record;
 	}
 }

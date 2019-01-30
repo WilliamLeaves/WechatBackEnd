@@ -1,7 +1,5 @@
 package com.WechatBackEnd.Model;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,25 +12,25 @@ public class Schedule {
 	@Id
 	@GeneratedValue
 	public int sid;
-	@Column(nullable = false)
+	@Column(name = "uid", columnDefinition = "int not null")
 	public int uid;
-	@Column(nullable = true)
+	@Column(name = "start_time", columnDefinition = "datetime null default '2000-01-01 00:00:00'")
 	public String start_time;
-	@Column(nullable = true)
+	@Column(name = "recruit_start_time", columnDefinition = "datetime null default '2000-01-01 00:00:00'")
 	public String recruit_start_time;
-	@Column(nullable = true)
+	@Column(name = "recruit_end_time", columnDefinition = "datetime null default '2000-01-01 00:00:00'")
 	public String recruit_end_time;
-	@Column(nullable = true)
+	@Column(name = "execute_time", columnDefinition = "datetime null default '2000-01-01 00:00:00'")
 	public String execute_time;
-	@Column(nullable = true)
+	@Column(name = "end_time", columnDefinition = "datetime null default '2000-01-01 00:00:00'")
 	public String end_time;
-	@Column(nullable = true)
+	@Column(name = "title", columnDefinition = "varchar(255) null default '缺失'")
 	public String title;
-	@Column(nullable = true)
+	@Column(name = "target", columnDefinition = "varchar(255) null default '缺失'")
 	public String target;
-	@Column(name = "describ", nullable = true)
+	@Column(name = "describ", columnDefinition = "varchar(255) null default '缺失'")
 	public String describe;
-	@Column(nullable = true)
+	@Column(name = "meet_place", columnDefinition = "varchar(255) null default '缺失'")
 	public String meet_place;
 	@Column(name = "partookNum", columnDefinition = "int null default 0")
 	public int partookNum;

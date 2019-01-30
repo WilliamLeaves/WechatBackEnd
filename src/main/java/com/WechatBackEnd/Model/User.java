@@ -10,19 +10,19 @@ public class User {
 	@Id
 	@GeneratedValue
 	public int uid;
-	@Column(nullable = false)
+	@Column(name = "nickname", columnDefinition = "varchar(255) not null")
 	public String nickname;
-	@Column(name="sex", columnDefinition="enum('男','女') null default 'male' ")
+	@Column(name = "sex", columnDefinition = "enum('男','女') null default '男' ")
 	public String sex;
-	@Column(nullable = true)
+	@Column(name = "college", columnDefinition = "varchar(255) null default '暂无'")
 	public String college;
-	@Column(nullable = true)
+	@Column(name = "major", columnDefinition = "varchar(255) null default '暂无'")
 	public String major;
-	@Column(name="register_time",nullable = true)
+	@Column(name = "register_time", columnDefinition = "datetime null default '2000-01-01 00:00:00'")
 	public String registerTime;
-	@Column(name="entrance_time",nullable = true)
+	@Column(name = "entrance_time", columnDefinition = "datetime null default '2000-01-01 00:00:00'")
 	public String entranceTime;
-	@Column(nullable = true)
+	@Column(name = "describ", columnDefinition = "varchar(255) null default '暂无'")
 	public String describ;
 
 	public User() {
@@ -32,7 +32,7 @@ public class User {
 	public static User getStub() {
 		User user = new User();
 		user.uid = 1;
-		user.sex ="男";
+		user.sex = "男";
 		user.nickname = "william";
 		user.college = "NJU";
 		user.major = "software";

@@ -9,15 +9,15 @@ import javax.persistence.Table;
 @Table(name = "session")
 public class Session {
 	@Id
-	@Column(name = "id", nullable = false)
+	@Column(name = "id")
 	public int id;
-	@Column(name = "uid", nullable = false)
+	@Column(name = "uid", columnDefinition = "int not null")
 	public int uid;
-	@Column(name = "sessionid", nullable = false)
+	@Column(name = "sessionid", columnDefinition = "varchar(255) not null")
 	public String sessionId;
-	@Column(name = "openid", nullable = false)
+	@Column(name = "openid", columnDefinition = "varchar(255) not null")
 	public String openId;
-	@Column(name = "active_time", nullable = false)
+	@Column(name = "active_time", columnDefinition = "datetime not null")
 	public String activeTime;
 
 	public Session() {

@@ -11,13 +11,13 @@ public class ScheduleCollectRecord {
 	@Id
 	@Column(name = "recordid", nullable = false)
 	public int recordId;
-	@Column(name = "uid", nullable = false)
+	@Column(name = "uid", columnDefinition = "int not null")
 	public int uid;
-	@Column(name = "sid", nullable = false)
+	@Column(name = "sid", columnDefinition = "int not null")
 	public int sid;
-	@Column(name = "record_time", nullable = false)
+	@Column(name = "record_time", columnDefinition = "datetime null default '2000-01-01 00:00:00'")
 	public String recordTime;
-	@Column(name = "is_positive", columnDefinition="enum('Y','N') null default 'Y'")
+	@Column(name = "is_positive", columnDefinition = "enum('Y','N') null default 'Y'")
 	public String isPositive;
 
 	public ScheduleCollectRecord() {

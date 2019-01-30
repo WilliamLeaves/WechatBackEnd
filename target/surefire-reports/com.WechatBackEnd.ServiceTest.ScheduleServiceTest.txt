@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: com.WechatBackEnd.ServiceTest.ScheduleServiceTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 7.595 s <<< FAILURE! - in com.WechatBackEnd.ServiceTest.ScheduleServiceTest
+getMyCollectingScheduleListTest(com.WechatBackEnd.ServiceTest.ScheduleServiceTest)  Time elapsed: 0.026 s  <<< FAILURE!
+java.lang.AssertionError: expected:<false> but was:<true>
+	at com.WechatBackEnd.ServiceTest.ScheduleServiceTest.getMyCollectingScheduleListTest(ScheduleServiceTest.java:59)
+

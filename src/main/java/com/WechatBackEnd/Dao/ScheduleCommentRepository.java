@@ -13,7 +13,7 @@ import com.WechatBackEnd.Model.ScheduleComment;
 public interface ScheduleCommentRepository extends JpaRepository<ScheduleComment, Integer> {
 	@Modifying
 	@Query(value = "select * from schedule_comment where sid=? order by record_time desc;", nativeQuery = true)
-	List<ScheduleComment> findCommentList(String sid);
+	List findCommentList(String sid);
 
 	@Modifying
 	@Query(value = "delete from schedule_comment where comment_content =?;", nativeQuery = true)

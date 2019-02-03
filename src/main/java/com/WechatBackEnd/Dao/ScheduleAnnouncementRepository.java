@@ -13,5 +13,5 @@ import com.WechatBackEnd.Model.ScheduleAnnouncement;
 public interface ScheduleAnnouncementRepository extends JpaRepository<ScheduleAnnouncement, Integer> {
 	@Modifying
 	@Query(value = "select * from schedule_announcement where sid=?", nativeQuery = true)
-	List<ScheduleAnnouncement> findAnnouncementList(String sid);
+	List findAnnouncementList(String sid);
 }

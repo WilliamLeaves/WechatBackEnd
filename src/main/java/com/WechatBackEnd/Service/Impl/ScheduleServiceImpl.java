@@ -140,7 +140,12 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public List getAnnouncementList(String sid) {
 		// TODO Auto-generated method stub
 		// this.scheduleAnnouncementRepository.findAllById();
-		return this.scheduleAnnouncementRepository.findAnnouncementList(sid);
+		List<ScheduleAnnouncement> result = new ArrayList<ScheduleAnnouncement>();
+		List<Object[]> list = this.scheduleAnnouncementRepository.findAnnouncementList(sid);
+		for (Object[] obArray : list) {
+			result.add(ScheduleAnnouncement.parseByObjectArray(obArray));
+		}
+		return result;
 	}
 
 	@Override
@@ -162,15 +167,16 @@ public class ScheduleServiceImpl implements ScheduleService {
 	@Override
 	public List getMyOwningScheduleList(String myUid) {
 		// TODO Auto-generated method stub
-		List<Schedule> list = this.scheduleRepository.findOwningList(myUid);
+		List<Object []> list = this.scheduleRepository.findOwningList(myUid);
 		List<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();
-		for (Schedule ob : list) {
+		for (Object[] ob : list) {
+			Schedule s=Schedule.parseByObjectArray(ob);
 			HashMap<String, Object> item = new HashMap<String, Object>();
-			item.put("sid", ob.sid);
-			item.put("title", ob.title);
-			item.put("target", ob.target);
-			item.put("execute_time", ob.execute_time);
-			item.put("status", ob.getStatus());
+			item.put("sid", s.sid);
+			item.put("title", s.title);
+			item.put("target", s.target);
+			item.put("execute_time", s.execute_time);
+			item.put("status", s.getStatus());
 			result.add(item);
 		}
 		return result;
@@ -180,8 +186,10 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public List getMyPartakeScheduleList(String myUid) {
 		// TODO Auto-generated method stub
 		List<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();
-		List<Schedule> list = this.schedulePartakeRepository.findMyPartakeList(myUid);
-		for (Schedule s : list) {
+		List<Object []> list = this.schedulePartakeRepository.findMyPartakeList(myUid);
+		//List<Schedule> list = (List<Schedule>) ob;
+		for (Object[] ob : list) {
+			Schedule s=Schedule.parseByObjectArray(ob);
 			HashMap<String, Object> m = new HashMap<String, Object>();
 			m.put("sid", s.sid);
 			m.put("title", s.title);

@@ -104,12 +104,12 @@ public class UserController {
 	@RequestMapping(value = "/user/updateUserInfo", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> updateUserInfo(HttpServletRequest req) {
-		User user = new User();
-		user.uid = Integer.parseInt(req.getAttribute("uid").toString());
-		user.nickname = req.getAttribute("nickname").toString();
-		user.college = req.getAttribute("major").toString();
-		user.entranceTime = req.getAttribute("entrance_time").toString();
-		user.describ = req.getAttribute("describe").toString();
+		User user = this.userService.getUser(req.getParameter("uid").toString());
+		user.nickname = req.getParameter("nickname").toString();
+		user.college = req.getParameter("college").toString();
+		user.major=req.getParameter("major").toString();
+		user.entranceTime = req.getParameter("entrance_time").toString();
+		user.describ = req.getParameter("describe").toString();
 		boolean result = userService.updateUserInfo(user);
 		Map<String, Object> res = new HashMap<String, Object>();
 		if (result) {
@@ -157,7 +157,7 @@ public class UserController {
 		String sessionKey = req.getHeader("sessionKey");
 		record.uid = this.loginService.findUidBySessionKey(sessionKey);
 
-		record.followUserId = Integer.parseInt(req.getAttribute("followed_uid").toString());
+		record.followUserId = Integer.parseInt(req.getParameter("followed_uid").toString());
 		record.isPositive = "N";
 		record.recordTime = TimeUtil.getCurrentTime();
 		Map<String, Object> res = new HashMap<String, Object>();

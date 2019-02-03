@@ -23,4 +23,14 @@ public class Session {
 	public Session() {
 
 	}
+
+	public static Session parseByObjectArray(Object[] obArray) {
+		Session res = new Session();
+		res.id = (int) obArray[0];
+		res.uid = (int) obArray[1];
+		res.sessionId = obArray[2].toString();
+		res.openId = obArray[3].toString();
+		res.activeTime = obArray[4].toString();
+		return res;
+	}
 }

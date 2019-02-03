@@ -11,11 +11,10 @@ import com.WechatBackEnd.Model.Session;
 
 @Transactional
 public interface SessionRepository extends JpaRepository<Session, Integer> {
-	
+
 	@Query(value = "select * from session where openid=?;", nativeQuery = true)
 	List<Session> findByOpenId(String openId);
 
-	
 	@Query(value = "select * from session where sessionid=? order by active_time  desc limit 1;", nativeQuery = true)
 	Session findUidBySessionKey(String sessionKey);
 }

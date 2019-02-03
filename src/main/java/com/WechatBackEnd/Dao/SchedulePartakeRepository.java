@@ -26,5 +26,5 @@ public interface SchedulePartakeRepository extends JpaRepository<SchedulePartake
 			+ "select * from schedule_partake as sp2\r\n" + "where sp2.uid=sp1.uid\r\n" + "and sp2.sid=sp1.sid\r\n"
 			+ "and sp2.record_time>sp1.record_time\r\n" + "and (sp2.status = 'quit'\r\n"
 			+ "or sp2.status = 'removed')\r\n" + ")\r\n" + "order by record_time;", nativeQuery = true)
-	List<Schedule> findMyPartakeList(String uid);
+	List findMyPartakeList(String uid);
 }

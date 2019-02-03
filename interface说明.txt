@@ -94,7 +94,7 @@ request:
 		uid:"uid",
 		nickname:"用户昵称",
 		college:"学校名称",
-		majod:"专业名称",
+		major:"专业名称",
 		describe:"用户描述",
 		entrance_time:"入学年份,如2014"
 	}

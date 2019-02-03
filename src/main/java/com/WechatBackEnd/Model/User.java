@@ -20,7 +20,7 @@ public class User {
 	public String major;
 	@Column(name = "register_time", columnDefinition = "datetime null default '2000-01-01 00:00:00'")
 	public String registerTime;
-	@Column(name = "entrance_time", columnDefinition = "datetime null default '2000-01-01 00:00:00'")
+	@Column(name = "entrance_time", columnDefinition = "varchar(255) null default '2000'")
 	public String entranceTime;
 	@Column(name = "describ", columnDefinition = "varchar(255) null default '暂无'")
 	public String describ;
@@ -37,7 +37,7 @@ public class User {
 		user.college = "NJU";
 		user.major = "software";
 		user.registerTime = "2019-01-01";
-		user.entranceTime = "2018-09-01";
+		user.entranceTime = "2018";
 		user.describ = "";
 		return user;
 	}

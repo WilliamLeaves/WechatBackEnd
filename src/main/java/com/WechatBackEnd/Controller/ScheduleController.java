@@ -28,6 +28,43 @@ public class ScheduleController {
 
 	@Autowired
 	private LoginService loginService;
+	
+	@RequestMapping(value = "/schedule/getAllSchedule", method = RequestMethod.GET)
+	public Map<String, Object> getAllSchedule(@RequestHeader("sessionKey") String sessionKey, String sid) {
+		Map<String, Object> res = new HashMap<String, Object>();
+		int myUid = this.loginService.findUidBySessionKey(sessionKey);
+		if (myUid != -1) {
+			
+			Schedule schedule = this.scheduleService.getSchedule(sid);
+			Map<String, Object> data = new HashMap<String, Object>();
+			data.put("sid", schedule.sid);
+			data.put("target", schedule.target);
+			//data.put("meet_place", schedule.meet_place);
+			//data.put("start_time", schedule.start_time);
+			//data.put("recruit_start_time", schedule.recruit_start_time);
+			//data.put("recruit_end_time", schedule.recruit_end_time);
+			data.put("execute_time", schedule.execute_time);
+			//data.put("end_time", schedule.end_time);
+			data.put("title", schedule.title);
+			data.put("content", schedule.describe);
+			data.put("uid", schedule.uid);
+			
+			// 需要额外逻辑的值
+			data.put("status", schedule.getStatus());
+			data.put("nickname", 1);
+			data.put("partakeNum", 1);
+			data.put("announcementNum", 1);
+
+			res.put("result", "1");
+			res.put("message", "获取出游计划详情成功");
+			res.put("data", data);
+		} else {
+			res.put("result", "2");
+			res.put("message", "请重新登录");
+			res.put("data", "");
+		}
+		return res;
+	}
 
 	@RequestMapping(value = "/getSchedule", method = RequestMethod.GET)
 	public Map<String, Object> getSchedule(@RequestHeader("sessionKey") String sessionKey, String sid) {
@@ -47,7 +84,7 @@ public class ScheduleController {
 			data.put("title", schedule.title);
 			data.put("content", schedule.describe);
 			data.put("uid", schedule.uid);
-
+			
 			// 需要额外逻辑的值
 			data.put("status", schedule.getStatus());
 			data.put("nickname", 1);
@@ -68,11 +105,11 @@ public class ScheduleController {
 	@RequestMapping(value = "/schedule/createSchedule", method = RequestMethod.POST)
 	public Map<String, Object> createSchedule(HttpServletRequest req) {
 		Map<String, Object> res = new HashMap<String, Object>();
-		int myUid = this.loginService.findUidBySessionKey(req.getParameter("sessionKey"));
+		int myUid = this.loginService.findUidBySessionKey(req.getHeader("sessionKey"));
 		if (myUid != -1) {
 			Schedule schedule = new Schedule();
 			schedule.sid = 0;
-			schedule.uid = Integer.parseInt(req.getParameter("uid").toString());
+			schedule.uid = myUid;
 			schedule.target = req.getParameter("target").toString();
 			schedule.meet_place = req.getParameter("meet_place").toString();
 			schedule.recruit_start_time = req.getParameter("recruit_start_time").toString();
@@ -80,7 +117,7 @@ public class ScheduleController {
 			schedule.execute_time = req.getParameter("execute_time").toString();
 			schedule.end_time = req.getParameter("end_time").toString();
 			schedule.title = req.getParameter("title").toString();
-			schedule.partookNum = Integer.parseInt(req.getParameter("patookNum").toString());
+			schedule.partookNum = Integer.parseInt(req.getParameter("partookNum").toString());
 			schedule.describe = req.getParameter("content".toString());
 			schedule.start_time = TimeUtil.getCurrentTime();
 
@@ -102,10 +139,10 @@ public class ScheduleController {
 		return res;
 	}
 
-	@RequestMapping(value = "/schedule/getMyCollectingScheduleList", method = RequestMethod.POST)
-	public Map<String, Object> getMyCollectingScheduleList(HttpServletRequest req) {
+	@RequestMapping(value = "/schedule/getMyCollectingScheduleList", method = RequestMethod.GET)
+	public Map<String, Object> getMyCollectingScheduleList(@RequestHeader("sessionKey") String sessionKey) {
 		Map<String, Object> res = new HashMap<String, Object>();
-		int myUid = this.loginService.findUidBySessionKey(req.getParameter("sessionKey"));
+		int myUid = this.loginService.findUidBySessionKey(sessionKey);
 		if (myUid != -1) {
 			res.put("result", "1");
 			res.put("message", "获取我收藏的出游计划成功");
@@ -118,13 +155,13 @@ public class ScheduleController {
 		return res;
 	}
 
-	@RequestMapping(value = "/schedule/getMyOwningScheduleList", method = RequestMethod.POST)
-	public Map<String, Object> getMyOwningScheduleList(HttpServletRequest req) {
+	@RequestMapping(value = "/schedule/getMyOwningScheduleList", method = RequestMethod.GET)
+	public Map<String, Object> getMyOwningScheduleList(@RequestHeader("sessionKey") String sessionKey) {
 		Map<String, Object> res = new HashMap<String, Object>();
-		int myUid = this.loginService.findUidBySessionKey(req.getParameter("sessionKey"));
+		int myUid = this.loginService.findUidBySessionKey(sessionKey);
 		if (myUid != -1) {
 			res.put("result", "1");
-			res.put("message", "获取我收藏的出游计划成功");
+			res.put("message", "获取我发起的出游计划成功");
 			res.put("data", this.scheduleService.getMyOwningScheduleList(String.valueOf(myUid)));
 		} else {
 			res.put("result", "2");
@@ -134,13 +171,13 @@ public class ScheduleController {
 		return res;
 	}
 
-	@RequestMapping(value = "/schedule/getMyPartakeScheduleList", method = RequestMethod.POST)
-	public Map<String, Object> getMyPartakeScheduleList(HttpServletRequest req) {
+	@RequestMapping(value = "/schedule/getMyPartakeScheduleList", method = RequestMethod.GET)
+	public Map<String, Object> getMyPartakeScheduleList(@RequestHeader("sessionKey") String sessionKey) {
 		Map<String, Object> res = new HashMap<String, Object>();
-		int myUid = this.loginService.findUidBySessionKey(req.getParameter("sessionKey"));
+		int myUid = this.loginService.findUidBySessionKey(sessionKey);
 		if (myUid != -1) {
 			res.put("result", "1");
-			res.put("message", "获取我收藏的出游计划成功");
+			res.put("message", "获取我参与的出游计划成功");
 			res.put("data", this.scheduleService.getMyPartakeScheduleList(String.valueOf(myUid)));
 		} else {
 			res.put("result", "2");
@@ -168,7 +205,7 @@ public class ScheduleController {
 			this.scheduleService.updateSchedule(schedule);
 
 			res.put("result", "1");
-			res.put("message", "获取我收藏的出游计划成功");
+			res.put("message", "更新出游计划成功");
 			res.put("data", "");
 		} else {
 			res.put("result", "2");

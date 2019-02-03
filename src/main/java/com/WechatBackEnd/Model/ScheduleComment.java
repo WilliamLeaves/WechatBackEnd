@@ -36,4 +36,15 @@ public class ScheduleComment {
 		record.commentContent = "超想看文艺复兴三杰展的！但是那个时候已经放假回家了QAQ";
 		return record;
 	}
+
+	public static ScheduleComment parseByObjectArray(Object[] obArray) {
+		ScheduleComment res = new ScheduleComment();
+		res.recordId = (int) obArray[0];
+		res.sid = (int) obArray[1];
+		res.uid = (int) obArray[2];
+		res.atUid = (int) obArray[3];
+		res.commentContent = obArray[4].toString();
+		res.recordTime = obArray[5].toString();
+		return res;
+	}
 }

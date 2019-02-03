@@ -31,4 +31,15 @@ public class ScheduleAnnouncement {
 		record.release_time = "2019-01-31 14:00:00";
 		return record;
 	}
+
+	public static ScheduleAnnouncement parseByObjectArray(Object[] obArray) {
+		ScheduleAnnouncement res = new ScheduleAnnouncement();
+		// res. =()obArray[];
+		res.recordId = (int) obArray[0];
+		res.sid = (int) obArray[1];
+		res.announcement_title = (String) obArray[2];
+		res.announcement_content = (String) obArray[3];
+		res.release_time = obArray[4].toString();
+		return res;
+	}
 }

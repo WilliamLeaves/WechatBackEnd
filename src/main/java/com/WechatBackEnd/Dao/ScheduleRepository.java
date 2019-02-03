@@ -12,6 +12,6 @@ import com.WechatBackEnd.Model.Schedule;
 @Transactional
 public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
 	@Modifying
-	@Query(value = "select * where uid=? order by execute_time desc;", nativeQuery = true)
-	List<Schedule> findOwningList(String myUid);
+	@Query(value = "select *  from schedule where uid=? order by execute_time desc;", nativeQuery = true)
+	List findOwningList(String myUid);
 }

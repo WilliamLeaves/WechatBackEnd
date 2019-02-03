@@ -97,4 +97,22 @@ public class Schedule {
 		}
 		return status;
 	}
+
+	public static Schedule parseByObjectArray(Object[] obArray) {
+		Schedule res = new Schedule();
+		res.sid = (int) obArray[0];
+		res.uid = (int) obArray[1];
+		res.start_time = obArray[2].toString();
+		res.recruit_start_time = obArray[3].toString();
+		res.recruit_end_time = obArray[4].toString();
+		res.execute_time = obArray[5].toString();
+		res.end_time = obArray[6].toString();
+		res.title = obArray[7].toString();
+		res.target = obArray[8].toString();
+		res.describe = obArray[9].toString();
+		res.meet_place = obArray[10].toString();
+		// res.link=obArray[11].toString();
+		res.partookNum = (int) obArray[12];
+		return res;
+	}
 }

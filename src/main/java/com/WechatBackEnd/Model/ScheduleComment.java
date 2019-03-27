@@ -11,7 +11,7 @@ public class ScheduleComment {
 	@Id
 	@Column(name = "recordid", nullable = false)
 	public int recordId;
-	@Column(name = "sid", columnDefinition = "int not null")
+	@Column(name = "aid", columnDefinition = "int not null")
 	public int sid;
 	@Column(name = "uid", columnDefinition = "int not null")
 	public int uid;

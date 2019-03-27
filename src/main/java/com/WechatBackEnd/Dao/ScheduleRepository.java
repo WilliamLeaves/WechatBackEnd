@@ -14,4 +14,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
 	@Modifying
 	@Query(value = "select *  from schedule where uid=? order by execute_time desc;", nativeQuery = true)
 	List findOwningList(String myUid);
+	
+	@Query(value = "select user.nickname from schedule,user where user.uid=schedule.uid and schedule.sid=?;", nativeQuery = true)
+	String findOwnerNameBySchedule(String sid);
 }

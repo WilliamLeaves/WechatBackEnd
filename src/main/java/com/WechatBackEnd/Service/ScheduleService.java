@@ -38,4 +38,11 @@ public interface ScheduleService {
 
 	public List getScheduleLookbackList(String sid);
 
+	public List getAllSchedule();
+
+	public boolean isScheduleCollected(String sid, String myUid);
+	
+	public int getScheduleAnnouncementNum(String sid);
+
+	public String getOwnerNameBySchedule(String sid);
 }

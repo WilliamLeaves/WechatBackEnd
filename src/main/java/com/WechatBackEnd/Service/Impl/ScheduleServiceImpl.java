@@ -167,10 +167,10 @@ public class ScheduleServiceImpl implements ScheduleService {
 	@Override
 	public List getMyOwningScheduleList(String myUid) {
 		// TODO Auto-generated method stub
-		List<Object []> list = this.scheduleRepository.findOwningList(myUid);
+		List<Object[]> list = this.scheduleRepository.findOwningList(myUid);
 		List<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();
 		for (Object[] ob : list) {
-			Schedule s=Schedule.parseByObjectArray(ob);
+			Schedule s = Schedule.parseByObjectArray(ob);
 			HashMap<String, Object> item = new HashMap<String, Object>();
 			item.put("sid", s.sid);
 			item.put("title", s.title);
@@ -186,10 +186,10 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public List getMyPartakeScheduleList(String myUid) {
 		// TODO Auto-generated method stub
 		List<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();
-		List<Object []> list = this.schedulePartakeRepository.findMyPartakeList(myUid);
-		//List<Schedule> list = (List<Schedule>) ob;
+		List<Object[]> list = this.schedulePartakeRepository.findMyPartakeList(myUid);
+		// List<Schedule> list = (List<Schedule>) ob;
 		for (Object[] ob : list) {
-			Schedule s=Schedule.parseByObjectArray(ob);
+			Schedule s = Schedule.parseByObjectArray(ob);
 			HashMap<String, Object> m = new HashMap<String, Object>();
 			m.put("sid", s.sid);
 			m.put("title", s.title);
@@ -235,6 +235,57 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public List getScheduleLookbackList(String sid) {
 		// TODO Auto-generated method stub
 		return this.scheduleLookbackRepository.findLookbackList(sid);
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getAllSchedule() {
+		// TODO Auto-generated method stub
+
+		// 这段代码需要重新实现，因为有一个遍历查询，效率低下
+
+		List<HashMap<String, Object>> res = new ArrayList<HashMap<String, Object>>();
+		List<Schedule> list = this.scheduleRepository.findAll();
+		for (Schedule schedule : list) {
+			HashMap<String, Object> m = new HashMap<String, Object>();
+			m.put("sid", schedule.sid);
+			m.put("uid", schedule.uid);
+			m.put("nickname", "william");
+			m.put("title", schedule.title);
+			m.put("target", schedule.target);
+			m.put("execute_time", schedule.execute_time);
+			m.put("status", schedule.getStatus());
+			m.put("describe", schedule.describe);
+			m.put("likeNum", "");
+			m.put("commentNum", "");
+			res.add(m);
+		}
+		return res;
+	}
+
+	@Override
+	public boolean isScheduleCollected(String sid, String myUid) {
+		// TODO Auto-generated method stub
+		ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) this
+				.getMyCollectingScheduleList(myUid);
+		for (HashMap<String, Object> map : list) {
+			if (map.get("sid") != null && map.get("sid").equals(sid)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public int getScheduleAnnouncementNum(String sid) {
+		// TODO Auto-generated method stub
+		return this.scheduleAnnouncementRepository.findAnnouncementList(sid).size();
+	}
+
+	@Override
+	public String getOwnerNameBySchedule(String sid) {
+		// TODO Auto-generated method stub
+		
+		return this.scheduleRepository.findOwnerNameBySchedule(sid);
 	}
 
 }

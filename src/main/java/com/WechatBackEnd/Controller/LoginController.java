@@ -50,6 +50,7 @@ public class LoginController {
 					res.put("result", "1");
 					res.put("message", "登录成功");
 				} else {
+					res.put("sessionKey",sessionKey);
 					res.put("result", "2");
 					res.put("message", "首次登录请注册");
 					// this.loginService.login(sessionKey, openId);

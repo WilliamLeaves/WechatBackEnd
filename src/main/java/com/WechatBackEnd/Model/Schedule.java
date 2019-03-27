@@ -34,6 +34,12 @@ public class Schedule {
 	public String meet_place;
 	@Column(name = "partookNum", columnDefinition = "int null default 0")
 	public int partookNum;
+	@Column(name = "target_province", columnDefinition = "varchar(255) null default '缺失'")
+	public String target_province;
+	@Column(name = "target_city", columnDefinition = "varchar(255) null default '缺失'")
+	public String target_city;
+	@Column(name = "target_area", columnDefinition = "varchar(255) null default '缺失'")
+	public String target_area;
 
 	public Schedule() {
 	}
@@ -50,6 +56,9 @@ public class Schedule {
 		stub.title = "【南大出游求组】2.1下午南博看展";
 		stub.meet_place = "南大鼓楼校区汉口路门";
 		stub.target = "南京博物院";
+		stub.target_province = "江苏";
+		stub.target_city = "南京市";
+		stub.target_area = "鼓楼区";
 		stub.describe = "二月一日下午一点半出发去南京博物院参观，行程大概两个半小时，欢迎南大的同学参加~";
 		stub.partookNum = 15;
 		return stub;
@@ -113,6 +122,9 @@ public class Schedule {
 		res.meet_place = obArray[10].toString();
 		// res.link=obArray[11].toString();
 		res.partookNum = (int) obArray[12];
+		res.target_province = obArray[13].toString();
+		res.target_city = obArray[14].toString();
+		res.target_area = obArray[15].toString();
 		return res;
 	}
 }

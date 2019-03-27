@@ -6,17 +6,24 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.WechatBackEnd.Model.FollowUserRecord;
+import com.WechatBackEnd.Model.Session;
 import com.WechatBackEnd.Model.User;
 import com.WechatBackEnd.Service.LoginService;
 import com.WechatBackEnd.Service.UserService;
+import com.WechatBackEnd.Util.Constant;
 import com.WechatBackEnd.Util.TimeUtil;
+import com.google.gson.Gson;
 
 @RestController
 public class UserController {
@@ -29,6 +36,21 @@ public class UserController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public Map<String, Object> register(HttpServletRequest req) {
 		Map<String, Object> res = new HashMap<String, Object>();
+		String sessionKey = "";
+		String openId = "";
+		String code = req.getParameter("userCode");
+		System.out.println("Acode" + code);
+		String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + Constant.APPID + "&secret="
+				+ Constant.SECRETKEY + "&js_code=" + code + "&grant_type=authorization_code";
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
+		if (responseEntity != null && responseEntity.getStatusCode() == HttpStatus.OK) {
+			Map m = new Gson().fromJson(responseEntity.getBody(), Map.class);
+			sessionKey = (String) m.get("session_key");
+			openId = (String) m.get("openid");
+			System.out.println("Asessionkey:" + sessionKey);
+			System.out.println("Aopenid:" + openId);
+		}
 		User user = new User();
 		user.uid = 0;
 		user.nickname = req.getParameter("nickname");
@@ -37,7 +59,15 @@ public class UserController {
 		user.major = req.getParameter("major");
 		user.entranceTime = req.getParameter("entrance_time");
 		user.describ = req.getParameter("describe");
-		if (this.userService.register(user)) {
+		user.registerTime = TimeUtil.getCurrentTime();
+		Session session = new Session();
+		session.id = 0;
+		session.uid = 0;
+		session.activeTime = TimeUtil.getCurrentTime();
+		session.openId = openId;
+		session.sessionId = sessionKey;
+
+		if (this.userService.register(user, session)) {
 			res.put("result", "1");
 			res.put("message", "注册成功");
 			res.put("data", "");
@@ -86,6 +116,7 @@ public class UserController {
 			map.put("uid", user.uid);
 			map.put("nickname", user.nickname);
 			map.put("college", user.college);
+			map.put("sex", user.sex);
 			map.put("major", user.major);
 			map.put("register_time", user.registerTime);
 			map.put("entrance_time", user.entranceTime);
@@ -104,10 +135,12 @@ public class UserController {
 	@RequestMapping(value = "/user/updateUserInfo", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> updateUserInfo(HttpServletRequest req) {
-		User user = this.userService.getUser(req.getParameter("uid").toString());
+		int myUid = this.loginService.findUidBySessionKey(req.getHeader("sessionKey"));
+		User user = this.userService.getUser(String.valueOf(myUid));
 		user.nickname = req.getParameter("nickname").toString();
+		user.sex = req.getParameter("sex").toString();
 		user.college = req.getParameter("college").toString();
-		user.major=req.getParameter("major").toString();
+		user.major = req.getParameter("major").toString();
 		user.entranceTime = req.getParameter("entrance_time").toString();
 		user.describ = req.getParameter("describe").toString();
 		boolean result = userService.updateUserInfo(user);
@@ -182,6 +215,23 @@ public class UserController {
 			res.put("result", "1");
 			res.put("message", "获取关注列表成功");
 			res.put("data", this.userService.getMyFollowingList(String.valueOf(uid)));
+		} else {
+			res.put("result", "2");
+			res.put("message", "请重新登录");
+			res.put("data", "");
+		}
+		return res;
+	}
+
+	@RequestMapping(value = "/user/isFollowed", method = RequestMethod.GET)
+	public Map<String, Object> isFollowed(@RequestHeader("SessionKey") String sessionKey, String uid) {
+		int myUid = this.loginService.findUidBySessionKey(sessionKey);
+		Map<String, Object> res = new HashMap<String, Object>();
+		if (myUid != -1) {
+
+			res.put("result", "1");
+			res.put("message", "获取关注列表成功");
+			res.put("data", this.userService.isFollowed(uid, String.valueOf(myUid)));
 		} else {
 			res.put("result", "2");
 			res.put("message", "请重新登录");

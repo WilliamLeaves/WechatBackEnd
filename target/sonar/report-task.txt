@@ -2,5 +2,5 @@ projectKey=com.example:WechatBackEnd
 serverUrl=http://localhost:9000
 serverVersion=7.5.0.20543
 dashboardUrl=http://localhost:9000/dashboard?id=com.example%3AWechatBackEnd
-ceTaskId=AWiX-04NpKgeAK7WB1nF
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AWiX-04NpKgeAK7WB1nF
+ceTaskId=AWiyNE9jldZvXjszpbQN
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AWiyNE9jldZvXjszpbQN

@@ -215,6 +215,41 @@ response:
 *****************************
 
 *****************************
+/schedule/getAllSchedule:获得首页计划列表
+request:
+{
+	url:"/schedule/getAllSchedule",
+	method:"GET",
+	header:{
+		"Content-Type": "application/x-www-form-urlencoded",
+       		"sessionKey": "登录时获取的sessionKey"
+	}
+	data:{
+	}
+}
+response:
+{
+	result:"1",
+	message:"获得首页计划列表成功",
+	data:{
+		scheduleList:[{
+			sid:1,
+			uid:1,
+			nickname:"用户昵称",
+			title:"计划标题",
+			target:"计划目的地",
+			execute_time:"出发时间",
+			status:"当前状态",
+			describe:"简介",
+			likeNum:"点赞数量",
+			commentNum:"评论数量"
+		}]
+	}
+	
+}
+*****************************
+
+*****************************
 /schedule/getMyCollectingScheduleList:获得我收藏的出游计划列表
 request:
 {
@@ -329,7 +364,10 @@ response:
 		sid:1,
 		target:"目的地",
 		meet_place:"出发地点",
-		start_time:"发布时间"
+		target_province:"目的地省份",
+		target_city:"目的地城市",
+		target_area:"目的地区",
+		start_time:"发布时间",
 		recruit_start_time:"报名开始时间",
 		recruit_end_time:"报名截止时间",
 		execute_time:"集合时间",
@@ -339,7 +377,6 @@ response:
 		content:"出游计划描述",
 		uid:"发起人id",
 		nickname:"发起人昵称",
-		partookNum:"已参与的人数",
 		announcementNum:"公告数量"
 	}
 	
@@ -365,7 +402,10 @@ reqeust:
 		end_time:"出游结束时间",
 		title:"计划标题",
 		content:"计划描述",
-		partookNum:"人数"
+		partookNum:"人数",
+		target_province:"目的地省份",
+		target_city:"目的地城市",
+		target_area:"目的地区"
 	}
 }
 response：
@@ -535,7 +575,7 @@ response:
 /schedule/receivePartake:同意用户参与出游
 request:
 {
-	url:"/schedule/receivePartake?sid=1&uid=1",
+	url:"/schedule/receivePartake?sid=1",
 	method:"GET",
 	header:{
         	"Content-Type": "application/x-www-form-urlencoded",
@@ -765,3 +805,293 @@ response:
 	
 }
 *****************************
+
+*****************************
+/user/isFollowed:查询用户是否被关注
+request:
+{
+	url:"/user/isFollowed?uid=1",
+	method:"GET",
+	header:{
+        	"Content-Type": "application/x-www-form-urlencoded",
+       		"sessionKey": "登录时获取的sessionKey"
+      	},
+	data:{
+	}
+}
+response:
+{
+	result:"",
+	message:"",
+	data:{
+			followed:"true"/"false"
+		}
+	}
+	
+}
+*****************************
+
+*****************************
+/schedule/isScheduleCollected:查询计划是否被收藏
+request:
+{
+	url:"/schedule/isScheduleCollected?sid=1",
+	method:"GET",
+	header:{
+        	"Content-Type": "application/x-www-form-urlencoded",
+       		"sessionKey": "登录时获取的sessionKey"
+      	},
+	data:{
+	}
+}
+response:
+{
+	result:"",
+	message:"",
+	data:{
+			isScheduleCollected:"true"/"false"
+		}
+	}
+	
+}
+*****************************
+
+*****************************
+/article/createArticle:新增一篇文章
+request:
+{
+	url:"/article/createArticle",
+	method:"POST",
+	header:{
+        	"Content-Type": "application/x-www-form-urlencoded",
+       		"sessionKey": "登录时获取的sessionKey"
+      	},
+	data:{
+		uid:"",
+		title:"",
+		content:"",
+		location:"",
+		pic_link:""
+	}
+}
+response:
+{
+	result:"1",
+	message:"发布成功",
+	data:{
+	}
+	
+}
+*****************************
+
+*****************************
+/article/updateArticle:修改一篇文章
+request:
+{
+	url:"/article/updateArticle",
+	method:"POST",
+	header:{
+        	"Content-Type": "application/x-www-form-urlencoded",
+       		"sessionKey": "登录时获取的sessionKey"
+      	},
+	data:{
+		aid:1,
+		title:"",
+		content:"",
+		location:"",
+		pic_link:""
+	}
+}
+response:
+{
+	result:"1",
+	message:"修改成功",
+	data:{
+	}
+	
+}
+*****************************
+
+*****************************
+/article/getArticle:获取文章详情
+request:
+{
+	url:"/article/getArticle?aid=1",
+	method:"GET",
+	header:{
+        	"Content-Type": "application/x-www-form-urlencoded",
+       		"sessionKey": "登录时获取的sessionKey"
+      	},
+	data:{
+	}
+}
+response:
+{
+	result:"1",
+	message:"获取详情成功",
+	data:{
+		aid:"1",
+		uid:"",
+		nickname:"",
+		title:"",
+		content:"",
+		release_time:"",
+		location:"",
+		pic_link:""
+	}
+	
+}
+*****************************
+
+*****************************
+/article/getArticleList:获取文章列表
+request:
+{
+	url:"/article/getArticleList",
+	method:"GET",
+	header:{
+        	"Content-Type": "application/x-www-form-urlencoded",
+       		"sessionKey": "登录时获取的sessionKey"
+      	},
+	data:{
+	}
+}
+response:
+{
+	result:"1",
+	message:"获取详情成功",
+	data:{[
+		aid:"1",
+		uid:"",
+		nickname:"",
+		title:"",
+		content:"",
+		release_time:"",
+		location:"",
+		pic_link:""
+	]}
+	
+}
+*****************************
+
+*****************************
+/article/likeArticle:点赞文章
+request:
+{
+	url:"/article/getArticleList?aid=1&is_positive=true",
+	method:"GET",
+	header:{
+        	"Content-Type": "application/x-www-form-urlencoded",
+       		"sessionKey": "登录时获取的sessionKey"
+      	},
+	data:{
+	}
+}
+response:
+{
+	result:"1",
+	message:"点赞/取消点赞成功",
+	data:""
+}
+
+*****************************
+
+*****************************
+/article/isLikedArticle:查看文章是否已被点赞
+request:
+{
+	url:"/article/isLikedArticle?aid=1",
+	method:"GET",
+	header:{
+        	"Content-Type": "application/x-www-form-urlencoded",
+       		"sessionKey": "登录时获取的sessionKey"
+      	},
+	data:{
+	}
+}
+response:
+{
+	result:"1",
+	message:"获取成功",
+	data:{
+		isLike:true/false
+	}
+}
+*****************************
+
+*****************************
+/article/createArticleComment:创建文章评论
+request:
+{
+	url:"/article/createArticleComment",
+	method:"GET",
+	header:{
+        	"Content-Type": "application/x-www-form-urlencoded",
+       		"sessionKey": "登录时获取的sessionKey"
+      	},
+	data:{
+		aid:"",
+		content:""
+	}
+}
+response:
+{
+	result:"1",
+	message:"获取成功",
+	data:{
+		isLike:true/false
+	}
+}
+*****************************
+
+
+*****************************
+/schedule/getScheduleCommentList:获取计划评论列表
+request:
+{
+	url:"/schedule/getScheduleCommentList?sid=1",
+	method:"GET",
+	header:{
+        	"Content-Type": "application/x-www-form-urlencoded",
+       		"sessionKey": "登录时获取的sessionKey"
+      	},
+	data:{
+	}
+}
+response:
+{
+	result:"1",
+	message:"获取成功",
+	data:{[
+		record_id:"",
+		sid:"",
+		uid:"",
+		content:"",
+		record_time:""
+	]}
+}
+*****************************
+
+*****************************
+/schedule/getSchedulePartookList:获取计划参与列表
+request:
+{
+	url:"/schedule/getSchedulePartookList?sid=1",
+	method:"GET",
+	header:{
+        	"Content-Type": "application/x-www-form-urlencoded",
+       		"sessionKey": "登录时获取的sessionKey"
+      	},
+	data:{
+	}
+}
+response:
+{
+	result:"1",
+	message:"获取成功",
+	data:{[
+		uid:"",
+		nickname:"",
+		partook_time:""
+	]}
+}

@@ -1,6 +1,7 @@
 package com.WechatBackEnd.Controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import com.WechatBackEnd.Model.ScheduleComment;
 import com.WechatBackEnd.Model.ScheduleLike;
 import com.WechatBackEnd.Model.ScheduleLookback;
 import com.WechatBackEnd.Service.LoginService;
+import com.WechatBackEnd.Service.PartakeService;
 import com.WechatBackEnd.Service.ScheduleService;
 import com.WechatBackEnd.Util.TimeUtil;
 
@@ -28,36 +30,19 @@ public class ScheduleController {
 
 	@Autowired
 	private LoginService loginService;
-	
-	@RequestMapping(value = "/schedule/getAllSchedule", method = RequestMethod.GET)
-	public Map<String, Object> getAllSchedule(@RequestHeader("sessionKey") String sessionKey, String sid) {
-		Map<String, Object> res = new HashMap<String, Object>();
-		int myUid = this.loginService.findUidBySessionKey(sessionKey);
-		if (myUid != -1) {
-			
-			Schedule schedule = this.scheduleService.getSchedule(sid);
-			Map<String, Object> data = new HashMap<String, Object>();
-			data.put("sid", schedule.sid);
-			data.put("target", schedule.target);
-			//data.put("meet_place", schedule.meet_place);
-			//data.put("start_time", schedule.start_time);
-			//data.put("recruit_start_time", schedule.recruit_start_time);
-			//data.put("recruit_end_time", schedule.recruit_end_time);
-			data.put("execute_time", schedule.execute_time);
-			//data.put("end_time", schedule.end_time);
-			data.put("title", schedule.title);
-			data.put("content", schedule.describe);
-			data.put("uid", schedule.uid);
-			
-			// 需要额外逻辑的值
-			data.put("status", schedule.getStatus());
-			data.put("nickname", 1);
-			data.put("partakeNum", 1);
-			data.put("announcementNum", 1);
+	@Autowired
+	private PartakeService partakeService;
 
+	@RequestMapping(value = "/schedule/getAllSchedule", method = RequestMethod.GET)
+	public Map<String, Object> getAllSchedule(String sid) {
+		Map<String, Object> res = new HashMap<String, Object>();
+		// int myUid = this.loginService.findUidBySessionKey(sessionKey);
+		int myUid = 1;
+		if (myUid != -1) {
+			List list = this.scheduleService.getAllSchedule();
 			res.put("result", "1");
 			res.put("message", "获取出游计划详情成功");
-			res.put("data", data);
+			res.put("data", list);
 		} else {
 			res.put("result", "2");
 			res.put("message", "请重新登录");
@@ -84,12 +69,15 @@ public class ScheduleController {
 			data.put("title", schedule.title);
 			data.put("content", schedule.describe);
 			data.put("uid", schedule.uid);
-			
+			data.put("target_province", schedule.target_province);
+			data.put("target_city", schedule.target_city);
+			data.put("target_area", schedule.target_area);
+
 			// 需要额外逻辑的值
 			data.put("status", schedule.getStatus());
-			data.put("nickname", 1);
-			data.put("partakeNum", 1);
-			data.put("announcementNum", 1);
+			data.put("nickname", this.scheduleService.getOwnerNameBySchedule(sid));
+			data.put("partakeNum", this.partakeService.getPartakeUserList(sid).size());
+			data.put("announcementNum", this.scheduleService.getAnnouncementList(sid).size());
 
 			res.put("result", "1");
 			res.put("message", "获取出游计划详情成功");
@@ -111,16 +99,18 @@ public class ScheduleController {
 			schedule.sid = 0;
 			schedule.uid = myUid;
 			schedule.target = req.getParameter("target").toString();
-			schedule.meet_place = req.getParameter("meet_place").toString();
-			schedule.recruit_start_time = req.getParameter("recruit_start_time").toString();
-			schedule.recruit_end_time = req.getParameter("recruit_end_time").toString();
-			schedule.execute_time = req.getParameter("execute_time").toString();
-			schedule.end_time = req.getParameter("end_time").toString();
+			schedule.recruit_start_time = req.getParameter("recruit_start_time").toString() + ":00";
+			schedule.recruit_end_time = req.getParameter("recruit_end_time").toString() + ":00";
+			schedule.execute_time = req.getParameter("execute_time").toString() + ":00";
+			schedule.end_time = req.getParameter("end_time").toString() + ":00";
 			schedule.title = req.getParameter("title").toString();
 			schedule.partookNum = Integer.parseInt(req.getParameter("partookNum").toString());
 			schedule.describe = req.getParameter("content".toString());
 			schedule.start_time = TimeUtil.getCurrentTime();
-
+			schedule.target_province = req.getParameter("target_province").toString();
+			schedule.target_city = req.getParameter("target_city").toString();
+			schedule.target_area = req.getParameter("target_area").toString();
+			schedule.meet_place = req.getParameter("meet_place_detail").toString();
 			if (this.scheduleService.addSchedule(schedule)) {
 				res.put("result", "1");
 				res.put("message", "发布出游计划成功");
@@ -290,6 +280,24 @@ public class ScheduleController {
 		return res;
 	}
 
+	@RequestMapping(value = "/schedule/getScheduleCommentList", method = RequestMethod.GET)
+	public Map<String, Object> getScheduleCommentList(@RequestHeader("sessionKey") String sessionKey, String sid) {
+		Map<String, Object> res = new HashMap<String, Object>();
+		int myUid = this.loginService.findUidBySessionKey(sessionKey);
+		if (myUid != -1) {
+
+			res.put("result", "1");
+			res.put("message", "获取成功");
+			res.put("data", this.scheduleService.getScheduleCommentList(sid));
+
+		} else {
+			res.put("result", "2");
+			res.put("message", "请重新登录");
+			res.put("data", "");
+		}
+		return res;
+	}
+
 	@RequestMapping(value = "/schedule/likeSchedule", method = RequestMethod.GET)
 	public Map<String, Object> likeSchedule(@RequestHeader("sessionKey") String sessionKey, String sid) {
 		Map<String, Object> res = new HashMap<String, Object>();
@@ -440,6 +448,23 @@ public class ScheduleController {
 			res.put("result", "1");
 			res.put("message", "获取计划回顾列表成功");
 			res.put("data", this.scheduleService.getScheduleLookbackList(req.getParameter("sid")));
+		} else {
+			res.put("result", "2");
+			res.put("message", "请重新登录");
+			res.put("data", "");
+		}
+		return res;
+	}
+
+	@RequestMapping(value = "/schedule/isScheduleCollected", method = RequestMethod.GET)
+	public Map<String, Object> isScheduleCollected(@RequestHeader("sessionKey") String sessionKey, String sid) {
+		Map<String, Object> res = new HashMap<String, Object>();
+		int myUid = this.loginService.findUidBySessionKey(sessionKey);
+		if (myUid != -1) {
+
+			res.put("result", "1");
+			res.put("message", "获取计划回顾列表成功");
+			res.put("data", this.scheduleService.isScheduleCollected(sid, String.valueOf(myUid)));
 		} else {
 			res.put("result", "2");
 			res.put("message", "请重新登录");

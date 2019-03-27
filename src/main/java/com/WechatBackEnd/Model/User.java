@@ -3,12 +3,13 @@ package com.WechatBackEnd.Model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class User {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int uid;
 	@Column(name = "nickname", columnDefinition = "varchar(255) not null")
 	public String nickname;

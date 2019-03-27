@@ -3,14 +3,15 @@ package com.WechatBackEnd.Service.Impl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.WechatBackEnd.Dao.FollowUserRecordRepository;
+import com.WechatBackEnd.Dao.SessionRepository;
 import com.WechatBackEnd.Dao.UserRepository;
 import com.WechatBackEnd.Model.FollowUserRecord;
+import com.WechatBackEnd.Model.Session;
 import com.WechatBackEnd.Model.User;
 import com.WechatBackEnd.Service.UserService;
 
@@ -21,6 +22,8 @@ public class UserServiceImpl implements UserService {
 	public UserRepository userRepository;
 	@Autowired
 	public FollowUserRecordRepository followUserRecordRepository;
+	@Autowired
+	public SessionRepository sessionRepository;
 
 	@Override
 	public User getUser(String uid) {
@@ -82,13 +85,29 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean register(User user) {
+	public boolean register(User user, Session session) {
 		// TODO Auto-generated method stub
-		if (this.userRepository.save(user) != null) {
+		int uid = this.userRepository.save(user).uid;
+		if (uid != 0) {
+			session.uid = uid;
+			sessionRepository.save(session);
 			return true;
 		} else {
+			System.out.println("error! uid=0 !");
 			return false;
 		}
+	}
+
+	@Override
+	public boolean isFollowed(String uid, String myUid) {
+		// TODO Auto-generated method stub
+		ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) this.getMyFollowingList(myUid);
+		for (HashMap<String, Object> map : list) {
+			if (map.get("uid") != null && map.get("uid").equals(uid)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

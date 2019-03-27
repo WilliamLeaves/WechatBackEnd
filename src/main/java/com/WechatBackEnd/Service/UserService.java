@@ -3,6 +3,7 @@ package com.WechatBackEnd.Service;
 import java.util.List;
 
 import com.WechatBackEnd.Model.FollowUserRecord;
+import com.WechatBackEnd.Model.Session;
 import com.WechatBackEnd.Model.User;
 
 public interface UserService {
@@ -18,6 +19,8 @@ public interface UserService {
 
 	public List getMyFollowingList(String myUid);
 
-	public boolean register(User user);
-	
+	public boolean register(User user,Session session);
+
+	public boolean isFollowed(String uid, String myUid);
+
 }
